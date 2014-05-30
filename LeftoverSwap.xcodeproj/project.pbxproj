@@ -747,6 +747,11 @@
 				CLASSPREFIX = LS;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = LeftoverSwap;
+				TargetAttributes = {
+					08F45593179F7C8200CB7E2D = {
+						DevelopmentTeam = 653PB2MCQP;
+					};
+				};
 			};
 			buildConfigurationList = 08F4558F179F7C8200CB7E2D /* Build configuration list for PBXProject "LeftoverSwap" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -976,6 +981,8 @@
 		08F455B8179F7C8200CB7E2D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -990,6 +997,7 @@
 					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -997,6 +1005,8 @@
 		08F455B9179F7C8200CB7E2D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1011,6 +1021,7 @@
 					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
