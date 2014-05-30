@@ -1,0 +1,19 @@
+PODS:
+  - Bolts (1.1.0)
+  - Facebook-iOS-SDK (3.14.1):
+    - Bolts
+  - HockeySDK (3.5.5)
+  - Parse (1.2.19):
+    - Facebook-iOS-SDK (~> 3.11)
+
+DEPENDENCIES:
+  - HockeySDK (~> 3.5)
+  - Parse (~> 1.2)
+
+SPEC CHECKSUMS:
+  Bolts: 91c2af8eae1d44e1dd75946a5b0ae04a43ea43e4
+  Facebook-iOS-SDK: e9b3d5ac54ee3e5e693f4eef470b97911b3d076d
+  HockeySDK: f9af97c2f5df4eb6ca6d2a9c408f2ff498edd608
+  Parse: ffebaecaddd32cb52671010f81567c298ff93d04
+
+COCOAPODS: 0.33.1
