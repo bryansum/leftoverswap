@@ -203,13 +203,6 @@
 			name = "Take Picture";
 			sourceTree = "<group>";
 		};
-		0805F28A17A7942800963343 /* External */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = External;
-			sourceTree = "<group>";
-		};
 		0823B42E17A0B11C00FE86FF /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -365,7 +358,6 @@
 			isa = PBXGroup;
 			children = (
 				08F4559D179F7C8200CB7E2D /* LeftoverSwap */,
-				0805F28A17A7942800963343 /* External */,
 				08F45596179F7C8200CB7E2D /* Frameworks */,
 				08F45595179F7C8200CB7E2D /* Products */,
 				5791DAB6E6E14ECEBFCFF931 /* Pods.xcconfig */,

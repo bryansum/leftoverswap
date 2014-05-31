@@ -94,9 +94,7 @@ static NSString *const kLastTimeOpenedKey = @"lastTimeOpened";
 
 #pragma mark - LSAppDelegate
 
-- (void)setupAppearance {
-  [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque];
-  
+- (void)setupAppearance {  
   // set the global navigation bar tint
 
   [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:0.411 green:0.858 blue:0.509 alpha:1.000]];

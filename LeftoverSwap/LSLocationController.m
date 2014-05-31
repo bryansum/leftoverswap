@@ -10,8 +10,6 @@
 #import "LSConstants.h"
 
 static double const kLSFeetToMeters = 0.3048; // this is an exact value.
-static double const kLSFeetToMiles = 5280.0; // this is an exact value.
-static double const kLSMetersInAKilometer = 1000.0; // this is an exact value.
 
 static NSString * const kDefaultsFilterDistanceKey = @"filterDistance";
 static NSString * const kDefaultsLocationKey = @"currentLocation";
