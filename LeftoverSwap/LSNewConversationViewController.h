@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 LeftoverSwap. All rights reserved.
 //
 
-#import "JSMessagesViewController.h"
+#import <JSQMessagesViewController/JSQMessages.h>
 
 @class PFObject, LSNewConversationViewController;
 
@@ -16,7 +16,7 @@
 
 @end
 
-@interface LSNewConversationViewController : JSMessagesViewController <JSMessagesViewDelegate>
+@interface LSNewConversationViewController : JSQMessagesViewController <JSQMessagesCollectionViewDelegateFlowLayout>
 
 @property (nonatomic, weak) id<LSNewConversationDelegate> conversationDelegate;
 

@@ -34,7 +34,7 @@
 //  OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import "JSMessagesViewController.h"
+#import <JSQMessagesViewController/JSQMessages.h>
 
 @class PFObject, LSConversationViewController;
 
@@ -45,7 +45,7 @@
 
 @end
 
-@interface LSConversationViewController : JSMessagesViewController <JSMessagesViewDelegate, JSMessagesViewDataSource>
+@interface LSConversationViewController : JSQMessagesViewController
 
 @property (nonatomic, readonly) PFObject *recipient;
 

@@ -19,77 +19,70 @@
 
 - (id)initWithPost:(PFObject*)post
 {
-  self = [super init];
-  if (self) {
-    LSConversationHeader *header = [[LSConversationHeader alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
-    header.post = self.post = post;
-    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:header.frame];
-    [self.view addSubview:header];
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        LSConversationHeader *header = [[LSConversationHeader alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+        header.post = self.post = post;
+        //    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:header.frame];
+        [self.view addSubview:header];
+    }
+    return self;
 }
 
 #pragma mark - Initialization
-- (UIButton *)sendButton
-{
-  // Override to use a custom send button
-  // The button's frame is set automatically for you
-  return [UIButton defaultSendButton];
-}
 
 #pragma mark - View lifecycle
 - (void)viewDidLoad
 {
-  [super viewDidLoad];
-  self.delegate = self;
-
-  self.navigationItem.title = @"New Conversation";
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelPressed:)];
+    [super viewDidLoad];
+    
+    self.navigationItem.title = @"New Conversation";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelPressed:)];
 }
 
 - (void)cancelPressed:(id)sender
 {
-  [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return 0;
+    return 0;
 }
 
 #pragma mark - Messages view delegate
 
 - (void)sendPressed:(UIButton *)sender withText:(NSString *)text
 {
-  if (self.conversationDelegate)
-    [self.conversationDelegate conversationController:self didSendText:text forPost:self.post];
-  [self finishSend];
+    if (self.conversationDelegate)
+        [self.conversationDelegate conversationController:self didSendText:text forPost:self.post];
+//    [self finishSend];
 }
 
-- (JSBubbleMessageType)messageTypeForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-  return (indexPath.row % 2) ? JSBubbleMessageTypeIncoming : JSBubbleMessageTypeOutgoing;
-}
-
-- (JSBubbleMessageStyle)messageStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-  return JSBubbleMessageStyleSquare;
-}
-
-- (JSMessagesViewTimestampPolicy)timestampPolicy
-{
-  return JSMessagesViewTimestampPolicyEveryThree;
-}
-
-- (JSMessagesViewAvatarPolicy)avatarPolicy
-{
-  return JSMessagesViewAvatarPolicyNone;
-}
-
-- (JSAvatarStyle)avatarStyle
-{
-  return JSAvatarStyleSquare;
-}
+//- (JSBubbleMessageType)messageTypeForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return (indexPath.row % 2) ? JSBubbleMessageTypeIncoming : JSBubbleMessageTypeOutgoing;
+//}
+//
+//- (JSBubbleMessageStyle)messageStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return JSBubbleMessageStyleSquare;
+//}
+//
+//- (JSMessagesViewTimestampPolicy)timestampPolicy
+//{
+//    return JSMessagesViewTimestampPolicyEveryThree;
+//}
+//
+//- (JSMessagesViewAvatarPolicy)avatarPolicy
+//{
+//    return JSMessagesViewAvatarPolicyNone;
+//}
+//
+//- (JSAvatarStyle)avatarStyle
+//{
+//    return JSAvatarStyleSquare;
+//}
 
 @end
