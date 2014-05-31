@@ -8,15 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		0805F28917A7940300963343 /* LSPostPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0805F28817A7940300963343 /* LSPostPhotoViewController.m */; };
-		0805F29217A7946300963343 /* UIImage+ResizeAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0805F28D17A7946300963343 /* UIImage+ResizeAdditions.m */; };
-		0805F29317A7946300963343 /* UIImage+AlphaAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0805F28F17A7946300963343 /* UIImage+AlphaAdditions.m */; };
-		0805F29417A7946300963343 /* UIImage+RoundedCornerAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0805F29117A7946300963343 /* UIImage+RoundedCornerAdditions.m */; };
 		0823B42817A0A4DE00FE86FF /* LSConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0823B42717A0A4DE00FE86FF /* LSConstants.m */; };
 		0823B42D17A0B11500FE86FF /* LSWelcomeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0823B42C17A0B11500FE86FF /* LSWelcomeButton.m */; };
 		083D474017DD2C670081FE4B /* LSNewConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 083D473F17DD2C670081FE4B /* LSNewConversationViewController.m */; };
 		083D474317DD31CA0081FE4B /* LSConversationHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 083D474217DD31CA0081FE4B /* LSConversationHeader.m */; };
 		083D474817DF964C0081FE4B /* PFObject+Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 083D474717DF964C0081FE4B /* PFObject+Conversation.m */; };
-		083D474B17E0BF2E0081FE4B /* PFObject+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 083D474A17E0BF2E0081FE4B /* PFObject+Utilities.m */; };
 		083D475217E3015C0081FE4B /* LSMePostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 083D475117E3015B0081FE4B /* LSMePostCell.m */; };
 		083D475517E5323B0081FE4B /* LSConversationUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 083D475417E5323B0081FE4B /* LSConversationUtils.m */; };
 		084157BF17E8C0400090C2E2 /* Icon-60.png in Resources */ = {isa = PBXBuildFile; fileRef = 084157BB17E8C0400090C2E2 /* Icon-60.png */; };
@@ -82,12 +78,6 @@
 /* Begin PBXFileReference section */
 		0805F28717A7940300963343 /* LSPostPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSPostPhotoViewController.h; sourceTree = "<group>"; };
 		0805F28817A7940300963343 /* LSPostPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSPostPhotoViewController.m; sourceTree = "<group>"; };
-		0805F28C17A7946300963343 /* UIImage+ResizeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ResizeAdditions.h"; sourceTree = "<group>"; };
-		0805F28D17A7946300963343 /* UIImage+ResizeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ResizeAdditions.m"; sourceTree = "<group>"; };
-		0805F28E17A7946300963343 /* UIImage+AlphaAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+AlphaAdditions.h"; sourceTree = "<group>"; };
-		0805F28F17A7946300963343 /* UIImage+AlphaAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+AlphaAdditions.m"; sourceTree = "<group>"; };
-		0805F29017A7946300963343 /* UIImage+RoundedCornerAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCornerAdditions.h"; sourceTree = "<group>"; };
-		0805F29117A7946300963343 /* UIImage+RoundedCornerAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCornerAdditions.m"; sourceTree = "<group>"; };
 		0823B42617A0A4DE00FE86FF /* LSConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSConstants.h; sourceTree = "<group>"; };
 		0823B42717A0A4DE00FE86FF /* LSConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSConstants.m; sourceTree = "<group>"; };
 		0823B42B17A0B11500FE86FF /* LSWelcomeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSWelcomeButton.h; sourceTree = "<group>"; };
@@ -98,8 +88,6 @@
 		083D474217DD31CA0081FE4B /* LSConversationHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSConversationHeader.m; sourceTree = "<group>"; };
 		083D474617DF964B0081FE4B /* PFObject+Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PFObject+Conversation.h"; sourceTree = "<group>"; };
 		083D474717DF964C0081FE4B /* PFObject+Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PFObject+Conversation.m"; sourceTree = "<group>"; };
-		083D474917E0BF2E0081FE4B /* PFObject+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PFObject+Utilities.h"; sourceTree = "<group>"; };
-		083D474A17E0BF2E0081FE4B /* PFObject+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PFObject+Utilities.m"; sourceTree = "<group>"; };
 		083D475017E3015B0081FE4B /* LSMePostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSMePostCell.h; sourceTree = "<group>"; };
 		083D475117E3015B0081FE4B /* LSMePostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSMePostCell.m; sourceTree = "<group>"; };
 		083D475317E5323A0081FE4B /* LSConversationUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSConversationUtils.h; sourceTree = "<group>"; };
@@ -218,22 +206,8 @@
 		0805F28A17A7942800963343 /* External */ = {
 			isa = PBXGroup;
 			children = (
-				0805F28B17A7945200963343 /* UIImage Categories */,
 			);
 			name = External;
-			sourceTree = "<group>";
-		};
-		0805F28B17A7945200963343 /* UIImage Categories */ = {
-			isa = PBXGroup;
-			children = (
-				0805F28C17A7946300963343 /* UIImage+ResizeAdditions.h */,
-				0805F28D17A7946300963343 /* UIImage+ResizeAdditions.m */,
-				0805F28E17A7946300963343 /* UIImage+AlphaAdditions.h */,
-				0805F28F17A7946300963343 /* UIImage+AlphaAdditions.m */,
-				0805F29017A7946300963343 /* UIImage+RoundedCornerAdditions.h */,
-				0805F29117A7946300963343 /* UIImage+RoundedCornerAdditions.m */,
-			);
-			name = "UIImage Categories";
 			sourceTree = "<group>";
 		};
 		0823B42E17A0B11C00FE86FF /* Views */ = {
@@ -368,8 +342,6 @@
 				08E05CEB17D7A53800393A3D /* PFObject+PrivateChannelName.m */,
 				083D474617DF964B0081FE4B /* PFObject+Conversation.h */,
 				083D474717DF964C0081FE4B /* PFObject+Conversation.m */,
-				083D474917E0BF2E0081FE4B /* PFObject+Utilities.h */,
-				083D474A17E0BF2E0081FE4B /* PFObject+Utilities.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -597,9 +569,6 @@
 				0823B42817A0A4DE00FE86FF /* LSConstants.m in Sources */,
 				0823B42D17A0B11500FE86FF /* LSWelcomeButton.m in Sources */,
 				0805F28917A7940300963343 /* LSPostPhotoViewController.m in Sources */,
-				0805F29217A7946300963343 /* UIImage+ResizeAdditions.m in Sources */,
-				0805F29317A7946300963343 /* UIImage+AlphaAdditions.m in Sources */,
-				0805F29417A7946300963343 /* UIImage+RoundedCornerAdditions.m in Sources */,
 				08F8DCC417AF7E6300A6AE60 /* LSPaddedTextField.m in Sources */,
 				08EB0F5017B300D600C5E4FF /* LSSignupViewController.m in Sources */,
 				08EB0F5117B300D600C5E4FF /* LSLoginViewController.m in Sources */,
@@ -620,7 +589,6 @@
 				083D474017DD2C670081FE4B /* LSNewConversationViewController.m in Sources */,
 				083D474317DD31CA0081FE4B /* LSConversationHeader.m in Sources */,
 				083D474817DF964C0081FE4B /* PFObject+Conversation.m in Sources */,
-				083D474B17E0BF2E0081FE4B /* PFObject+Utilities.m in Sources */,
 				083D475217E3015C0081FE4B /* LSMePostCell.m in Sources */,
 				083D475517E5323B0081FE4B /* LSConversationUtils.m in Sources */,
 			);

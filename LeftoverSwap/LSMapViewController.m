@@ -308,7 +308,7 @@
 
 #pragma mark - Center on current location
 
-- (IBAction)centerMapOnCurrentLocation
+- (void)centerMapOnCurrentLocation
 {
   CLLocation *currentLocation = locationController.currentLocation;
   CLLocationAccuracy filterDistance = locationController.filterDistance;

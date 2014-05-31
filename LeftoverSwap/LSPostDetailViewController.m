@@ -10,8 +10,8 @@
 #import "LSConstants.h"
 #import "TTTTimeIntervalFormatter.h"
 #import "LSTabBarController.h"
-#import "PFObject+Utilities.h"
 #import "LSConversationUtils.h"
+#import "PFObject+Conversation.h"
 
 @interface LSPostDetailViewController ()
 
@@ -41,7 +41,7 @@ static TTTTimeIntervalFormatter *timeFormatter;
       timeFormatter = [[TTTTimeIntervalFormatter alloc] init];
     }
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(cancel:)];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(postWasTaken:) name:kLSPostTakenNotification object:nil];
   }

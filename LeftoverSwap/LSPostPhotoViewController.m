@@ -14,7 +14,7 @@
 #import "LSConstants.h"
 #import "LSPostPhotoViewController.h"
 #import "LSPaddedTextField.h"
-#import "UIImage+ResizeAdditions.h"
+#import "UIImage+Resize.h"
 
 @interface LSPostPhotoViewController ()
 

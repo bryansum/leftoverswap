@@ -35,6 +35,7 @@
 
 @interface PFObject (User)
 
-- (BOOL)iSEqualToUser:(PFObject*)user;
+- (BOOL)isEqualToUser:(PFObject*)user;
+- (BOOL)isCurrentUser;
 
 @end

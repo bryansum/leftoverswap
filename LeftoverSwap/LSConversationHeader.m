@@ -10,8 +10,7 @@
 
 #import <Parse/Parse.h>
 #import "LSConstants.h"
-#import "UIImage+RoundedCornerAdditions.h"
-#import "PFObject+Utilities.h"
+#import "PFObject+Conversation.h"
 #import "LSConversationUtils.h"
 
 typedef NS_ENUM(NSUInteger, LSConversationHeaderState) {

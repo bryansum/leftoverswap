@@ -21,10 +21,10 @@
 {
     self = [super init];
     if (self) {
-        LSConversationHeader *header = [[LSConversationHeader alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
-        header.post = self.post = post;
-        //    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:header.frame];
-        [self.view addSubview:header];
+//        LSConversationHeader *header = [[LSConversationHeader alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+//        header.post = self.post = post;
+//        //    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:header.frame];
+//        [self.view addSubview:header];
     }
     return self;
 }
@@ -45,44 +45,16 @@
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - Table view data source
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return 0;
-}
+#pragma mark - JSQMessagesViewController
 
-#pragma mark - Messages view delegate
-
-- (void)sendPressed:(UIButton *)sender withText:(NSString *)text
+- (void)didPressSendButton:(UIButton *)button
+           withMessageText:(NSString *)text
+                    sender:(NSString *)sender
+                      date:(NSDate *)date
 {
-    if (self.conversationDelegate)
+    if (self.conversationDelegate) {
         [self.conversationDelegate conversationController:self didSendText:text forPost:self.post];
-//    [self finishSend];
+    }
 }
-
-//- (JSBubbleMessageType)messageTypeForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    return (indexPath.row % 2) ? JSBubbleMessageTypeIncoming : JSBubbleMessageTypeOutgoing;
-//}
-//
-//- (JSBubbleMessageStyle)messageStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    return JSBubbleMessageStyleSquare;
-//}
-//
-//- (JSMessagesViewTimestampPolicy)timestampPolicy
-//{
-//    return JSMessagesViewTimestampPolicyEveryThree;
-//}
-//
-//- (JSMessagesViewAvatarPolicy)avatarPolicy
-//{
-//    return JSMessagesViewAvatarPolicyNone;
-//}
-//
-//- (JSAvatarStyle)avatarStyle
-//{
-//    return JSAvatarStyleSquare;
-//}
 
 @end

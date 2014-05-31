@@ -3,21 +3,14 @@
 // Free for personal or commercial use, with or without modification.
 // No warranty is expressed or implied.
 
-// http://vocaro.com/trevor/blog/2009/10/12/resize-a-uiimage-the-right-way/
-
-#import "UIImage+RoundedCornerAdditions.h"
-#import "UIImage+AlphaAdditions.h"
-
-// Private helper methods
-@interface UIImage (PrivateRoundedCorner)
-- (void)addRoundedRectToPath:(CGRect)rect context:(CGContextRef)context ovalWidth:(CGFloat)ovalWidth ovalHeight:(CGFloat)ovalHeight;
-@end
+#import "UIImage+RoundedCorner.h"
+#import "UIImage+Alpha.h"
 
 @implementation UIImage (RoundedCorner)
 
 // Creates a copy of this image with rounded corners
 // If borderSize is non-zero, a transparent border of the given size will also be added
-// Original author: BjÃ¶rn SÃ¥llarp. Used with permission. See: http://blog.sallarp.com/iphone-uiimage-round-corners/
+// Original author: Björn Sållarp. Used with permission. See: http://blog.sallarp.com/iphone-uiimage-round-corners/
 - (UIImage *)roundedCornerImage:(NSInteger)cornerSize borderSize:(NSInteger)borderSize {
     // If the image does not have an alpha layer, add one
     UIImage *image = [self imageWithAlpha];
@@ -30,7 +23,7 @@
                                                  0,
                                                  CGImageGetColorSpace(image.CGImage),
                                                  CGImageGetBitmapInfo(image.CGImage));
-    
+
     // Create a clipping path with rounded corners
     CGContextBeginPath(context);
     [self addRoundedRectToPath:CGRectMake(borderSize, borderSize, image.size.width - borderSize * 2, image.size.height - borderSize * 2)
@@ -39,7 +32,7 @@
                     ovalHeight:cornerSize];
     CGContextClosePath(context);
     CGContextClip(context);
-    
+
     // Draw the image to the context; the clipping path will make anything outside the rounded rect transparent
     CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
     
@@ -58,7 +51,7 @@
 #pragma mark Private helper methods
 
 // Adds a rectangular path to the given context and rounds its corners by the given extents
-// Original author: BjÃ¶rn SÃ¥llarp. Used with permission. See: http://blog.sallarp.com/iphone-uiimage-round-corners/
+// Original author: Björn Sållarp. Used with permission. See: http://blog.sallarp.com/iphone-uiimage-round-corners/
 - (void)addRoundedRectToPath:(CGRect)rect context:(CGContextRef)context ovalWidth:(CGFloat)ovalWidth ovalHeight:(CGFloat)ovalHeight {
     if (ovalWidth == 0 || ovalHeight == 0) {
         CGContextAddRect(context, rect);

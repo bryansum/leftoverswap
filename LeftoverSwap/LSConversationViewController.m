@@ -166,6 +166,51 @@
     [self scrollToBottomAnimated:NO];
 }
 
+#pragma mark - JSQMessagesViewController
+
+- (void)didPressSendButton:(UIButton *)button
+           withMessageText:(NSString *)text
+                    sender:(NSString *)sender
+                      date:(NSDate *)date
+{
+    /**
+     *  Sending a message. Your implementation of this method should do *at least* the following:
+     *
+     *  1. Play sound (optional)
+     *  2. Add new id<JSQMessageData> object to your data source
+     *  3. Call `finishSendingMessage`
+     */
+    [JSQSystemSoundPlayer jsq_playMessageSentSound];
+
+    PFObject *newConversation = [PFObject conversationForMessage:text recipient:self.recipient];
+    [newConversation setObject:[self p_latestPost] forKey:kConversationPostKey];
+    
+    [newConversation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!succeeded)
+            return;
+        
+        [newConversation sendPush];
+        
+        if (self.conversationDelegate)
+            [self.conversationDelegate conversationController:self didAddConversation:newConversation];
+    }];
+    
+//    [self p_setHeaderView];
+
+    [self.locallyAddedConversations addObject:newConversation];
+    [self.conversations addObject:newConversation];
+    
+    [self finishSendingMessage];
+}
+
+- (void)didPressAccessoryButton:(UIButton *)sender
+{
+    NSLog(@"Camera pressed!");
+    /**
+     *  Accessory button has no default functionality, yet.
+     */
+}
+
 #pragma mark - JSQMessages CollectionView DataSource
 
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -176,7 +221,7 @@
 - (UIImageView *)collectionView:(JSQMessagesCollectionView *)collectionView bubbleImageViewForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     PFObject *fromUser = [self.conversations[indexPath.row] fromUser];
-    if ([fromUser iSEqualToUser:[PFUser currentUser]]) {
+    if ([fromUser isEqualToUser:[PFUser currentUser]]) {
         return [[UIImageView alloc] initWithImage:self.outgoingBubbleImageView.image
                                  highlightedImage:self.outgoingBubbleImageView.highlightedImage];
     } else {
@@ -233,10 +278,12 @@
         }
     }
     
-    /**
-     *  Don't specify attributes to use the defaults.
-     */
-    return [[NSAttributedString alloc] initWithString:message.sender];
+    return nil;
+//    
+//    /**
+//     *  Don't specify attributes to use the defaults.
+//     */
+//    return [[NSAttributedString alloc] initWithString:message.sender];
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
@@ -408,9 +455,9 @@
 //    //    [self.tableView setNeedsDisplay];
 //}
 
-//- (PFObject*)p_latestPost
-//{
-//    return [[self.conversations lastObject] objectForKey:kConversationPostKey];
-//}
+- (PFObject*)p_latestPost
+{
+    return [[self.conversations lastObject] objectForKey:kConversationPostKey];
+}
 
 @end

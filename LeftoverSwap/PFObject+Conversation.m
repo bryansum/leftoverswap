@@ -122,9 +122,14 @@
 
 @implementation PFObject (User)
 
-- (BOOL)iSEqualToUser:(PFObject*)user
+- (BOOL)isEqualToUser:(PFObject*)user
 {
     return [self.objectId isEqualToString:user.objectId];
+}
+
+- (BOOL)isCurrentUser
+{
+    return [self isEqualToUser:[PFUser currentUser]];
 }
 
 @end

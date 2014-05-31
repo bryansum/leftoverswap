@@ -96,3 +96,9 @@
 #define COCOAPODS_VERSION_MINOR_Parse 2
 #define COCOAPODS_VERSION_PATCH_Parse 19
 
+// UIImage-Categories
+#define COCOAPODS_POD_AVAILABLE_UIImage_Categories
+#define COCOAPODS_VERSION_MAJOR_UIImage_Categories 0
+#define COCOAPODS_VERSION_MINOR_UIImage_Categories 0
+#define COCOAPODS_VERSION_PATCH_UIImage_Categories 1
+

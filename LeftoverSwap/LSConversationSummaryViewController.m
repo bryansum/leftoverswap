@@ -12,7 +12,6 @@
 #import "LSConversationViewController.h"
 #import "LSConversationUtils.h"
 #import "PFObject+Conversation.h"
-#import "PFObject+Utilities.h"
 
 @interface LSConversationSummaryViewController ()
 

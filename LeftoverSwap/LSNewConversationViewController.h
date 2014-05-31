@@ -10,13 +10,13 @@
 
 @class PFObject, LSNewConversationViewController;
 
-@protocol LSNewConversationDelegate <NSObject>
+@protocol LSNewConversationDelegate
 
 - (void)conversationController:(LSNewConversationViewController*)conversation didSendText:(NSString*)text forPost:(PFObject*)post;
 
 @end
 
-@interface LSNewConversationViewController : JSQMessagesViewController <JSQMessagesCollectionViewDelegateFlowLayout>
+@interface LSNewConversationViewController : JSQMessagesViewController
 
 @property (nonatomic, weak) id<LSNewConversationDelegate> conversationDelegate;
 
