@@ -38,7 +38,7 @@
 
 @class PFObject, LSConversationViewController;
 
-@protocol LSConversationControllerDelegate <NSObject>
+@protocol LSConversationControllerDelegate
 @required
 
 - (void)conversationController:(LSConversationViewController*)conversationController didAddConversation:(PFObject*)conversation;
@@ -53,6 +53,7 @@
 
 - (void)updateConversations:(NSMutableArray*)conversations;
 - (void)addMessage:(NSString*)text forPost:(PFObject*)post;
+
 - (id)initWithConversations:(NSArray*)conversations recipient:(PFObject*)recipient;
 
 @end

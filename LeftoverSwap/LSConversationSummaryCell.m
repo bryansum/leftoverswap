@@ -90,7 +90,7 @@ static TTTTimeIntervalFormatter *timeFormatter;
   self.messageLabel.text = [conversation objectForKey:kConversationMessageKey];
   self.timeLabel.text = [timeFormatter stringForTimeIntervalFromDate:[NSDate date] toDate:[conversation createdAt]];
   
-  NSString *recipientText = [[conversation recipient] objectForKey:kUserDisplayNameKey];
+  NSString *recipientText = [[conversation otherPerson] name];
   NSString *postText = [NSString stringWithFormat:@"  for %@", [post objectForKey:kPostTitleKey]];
   
   NSMutableAttributedString *titleLabelText = [[NSMutableAttributedString alloc] initWithString:[recipientText stringByAppendingString:postText]];
