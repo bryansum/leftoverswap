@@ -109,7 +109,7 @@
 
 - (void)addNewConversation:(NSString*)text forPost:(PFObject*)post
 {
-    PFUser *person = [post objectForKey:kPostUserKey];
+    PFUser *person = [post user];
     
     LSConversationViewController *conversationController = [[LSConversationViewController alloc] initWithConversations:[self p_conversationsWithPerson:person] otherPerson:person];
     conversationController.conversationDelegate = self;
@@ -196,7 +196,7 @@
             // All new conversations not from us
             NSInteger badgeCount = 0;
             for (PFObject *newConversation in toAdd) {
-                if (![[newConversation objectForKey:kConversationFromUserKey] isCurrentUser])
+                if (![[newConversation fromUser] isCurrentUser])
                     ++badgeCount;
             }
             [self p_incrementBadgeCount:badgeCount];
