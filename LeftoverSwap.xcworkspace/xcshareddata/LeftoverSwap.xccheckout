@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D5BE186B-F112-4B14-91F3-91CA3DBC8896</string>
+	<key>IDESourceControlProjectName</key>
+	<string>LeftoverSwap</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>A3C5806E-5362-406B-A9B7-6E156F51F43A</key>
+		<string>ssh://github.com/bryansum/leftoverswap.git</string>
+	</dict>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>A3C5806E-5362-406B-A9B7-6E156F51F43A</key>
+		<string>../../../04/LeftoverSwap</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/bryansum/leftoverswap.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>A3C5806E-5362-406B-A9B7-6E156F51F43A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>A3C5806E-5362-406B-A9B7-6E156F51F43A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>LeftoverSwap</string>
+		</dict>
+	</array>
+</dict>
+</plist>
