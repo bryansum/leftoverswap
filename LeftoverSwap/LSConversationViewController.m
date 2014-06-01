@@ -45,7 +45,7 @@
 @interface LSConversationViewController ()
 
 @property (nonatomic) NSMutableArray *locallyAddedConversations; /* PFObject */
-@property (nonatomic) PFObject *recipient;
+@property (nonatomic) PFUser *otherPerson;
 @property (nonatomic) NSMutableArray *conversations; /* PFObject */
 //@property (nonatomic) LSConversationHeader *header;
 
@@ -58,16 +58,16 @@
 
 #pragma mark - NSObject
 
-- (id)initWithConversations:(NSArray*)conversations recipient:(PFObject*)recipient
+- (id)initWithConversations:(NSArray*)conversations otherPerson:(PFUser*)person
 {
     NSParameterAssert(conversations != nil);
-    NSParameterAssert(recipient != nil);
+    NSParameterAssert(person != nil);
 
     self = [super init];
     if (self) {
         self.locallyAddedConversations = [NSMutableArray array];
         self.conversations = [conversations mutableCopy];
-        self.recipient = recipient;
+        self.otherPerson = person;
     }
     return self;
 }
@@ -78,7 +78,7 @@
 {
     [super viewDidLoad];
 
-    self.title = [self.recipient name];
+    self.title = [self.otherPerson name];
     self.sender = [[PFUser currentUser] name];
 
     self.outgoingBubbleImageView = [JSQMessagesBubbleImageFactory
@@ -144,7 +144,7 @@
 
 - (void)addMessage:(NSString*)text forPost:(PFObject*)post
 {
-    PFObject *newConversation = [PFObject conversationForMessage:text recipient:self.recipient];
+    PFObject *newConversation = [PFObject conversationForMessage:text recipient:self.otherPerson];
     [newConversation setObject:post forKey:kConversationPostKey];
     
     [newConversation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -182,7 +182,7 @@
      */
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
 
-    PFObject *newConversation = [PFObject conversationForMessage:text recipient:self.recipient];
+    PFObject *newConversation = [PFObject conversationForMessage:text recipient:self.otherPerson];
     [newConversation setObject:[self p_latestPost] forKey:kConversationPostKey];
     
     [newConversation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {

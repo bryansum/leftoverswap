@@ -47,13 +47,13 @@
 
 @interface LSConversationViewController : JSQMessagesViewController
 
-@property (nonatomic, readonly) PFObject *recipient;
+@property (nonatomic, readonly) PFUser *otherPerson;
 
 @property (nonatomic, weak) id<LSConversationControllerDelegate> conversationDelegate;
 
 - (void)updateConversations:(NSMutableArray*)conversations;
 - (void)addMessage:(NSString*)text forPost:(PFObject*)post;
 
-- (id)initWithConversations:(NSArray*)conversations recipient:(PFObject*)recipient;
+- (id)initWithConversations:(NSArray*)conversations otherPerson:(PFUser*)person;
 
 @end

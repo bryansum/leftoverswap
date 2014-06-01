@@ -15,10 +15,10 @@
 
 @interface LSConversationSummaryViewController ()
 
-@property (nonatomic) NSArray *objects; /* PFObject */
+@property (nonatomic, strong) NSArray *objects; /* convs.; created_at DESC */
 @property (nonatomic, weak) LSConversationViewController *conversationController;
-@property (nonatomic) NSMutableDictionary *recipientConversations; /* NSString *objectId => NSArray of PFObjects */
-@property (nonatomic) NSArray *summarizedObjects; /* NSArray of PFObjects */
+@property (nonatomic, strong) NSMutableDictionary *conversationsByPerson; /* NSString *objectId => NSArray of convs.; created_at ASC */
+@property (nonatomic, strong) NSArray *summarizedObjects; /* NSArray of NSArray of convs.; Inner is created_at ASC; Outer is by most recent conv.'s created_at DESC */
 
 @end
 
@@ -28,9 +28,9 @@
 
 - (void)dealloc
 {
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:kLSConversationCreatedNotification object:nil];
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:kLSUserLogInNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kLSConversationCreatedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kLSUserLogInNotification object:nil];
 }
 
 #pragma mark - UITableViewController
@@ -41,7 +41,7 @@
     if (self) {
         self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Conversations" image:[UIImage imageNamed:@"TabBarMessage"] tag:1];
         self.title = @"Conversations";
-        self.recipientConversations = [NSMutableDictionary dictionary];
+        self.conversationsByPerson = [NSMutableDictionary dictionary];
         self.objects = [NSArray array];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(p_conversationCreated:) name:kLSConversationCreatedNotification object:nil];
@@ -71,10 +71,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PFObject *conversation = self.summarizedObjects[indexPath.row][0];
-    PFObject *recipient = [conversation otherPerson];
+    PFObject *conversation = [self.summarizedObjects[indexPath.row] lastObject];
+    PFUser *person = [conversation otherPerson];
     
-    LSConversationViewController *conversationController = [[LSConversationViewController alloc] initWithConversations:[self p_conversationsForRecipient:recipient] recipient:recipient];
+    LSConversationViewController *conversationController = [[LSConversationViewController alloc] initWithConversations:[self p_conversationsWithPerson:person] otherPerson:person];
     conversationController.conversationDelegate = self;
     conversationController.hidesBottomBarWhenPushed = YES;
     self.conversationController = conversationController;
@@ -101,7 +101,7 @@
     if (cell == nil) {
         cell = [[LSConversationSummaryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    cell.conversation = self.summarizedObjects[indexPath.row][0];
+    cell.conversation = [self.summarizedObjects[indexPath.row] lastObject];
     return cell;
 }
 
@@ -109,9 +109,9 @@
 
 - (void)addNewConversation:(NSString*)text forPost:(PFObject*)post
 {
-    PFObject *recipient = [post objectForKey:kPostUserKey];
+    PFUser *person = [post objectForKey:kPostUserKey];
     
-    LSConversationViewController *conversationController = [[LSConversationViewController alloc] initWithConversations:[self p_conversationsForRecipient:recipient] recipient:recipient];
+    LSConversationViewController *conversationController = [[LSConversationViewController alloc] initWithConversations:[self p_conversationsWithPerson:person] otherPerson:person];
     conversationController.conversationDelegate = self;
     conversationController.hidesBottomBarWhenPushed = YES;
     self.conversationController = conversationController;
@@ -123,7 +123,7 @@
 
 - (void)conversationController:(LSConversationViewController *)conversationController didAddConversation:(PFObject *)conversation
 {
-    [[self p_conversationsForRecipient:[conversation otherPerson]] insertObject:conversation atIndex:0];
+    [[self p_conversationsWithPerson:[conversation otherPerson]] addObject:conversation];
     [self p_updateSummarizedObjects];
     [self.tableView reloadData];
 }
@@ -133,13 +133,14 @@
 - (void)p_didBecomeActive:(NSNotification*)notification
 {
     if (![PFUser currentUser]) return;
+//    [self p_loadConversations];
     [self p_loadNewConversationsWithBadgeUpdate:NO];
 }
 
 - (void)p_userDidLogIn:(NSNotification*)notification
 {
     // Clear them out immediately
-    self.recipientConversations = [NSMutableDictionary dictionary];
+    self.conversationsByPerson = [NSMutableDictionary dictionary];
     self.summarizedObjects = [NSArray array];
     [self.tableView reloadData];
     self.navigationController.tabBarItem.badgeValue = nil;
@@ -164,12 +165,12 @@
             return;
         
         self.objects = objects;
-        [self p_partitionConversationsByRecipient:objects];
+        [self p_partitionConversationsByPerson:objects];
         [self.tableView reloadData];
         
         // Refresh conversation view.
         if (self.conversationController) {
-            [self.conversationController updateConversations:[self p_conversationsForRecipient:self.conversationController.recipient]];
+            [self.conversationController updateConversations:[self p_conversationsWithPerson:self.conversationController.otherPerson]];
         }
     }];
 }
@@ -202,26 +203,32 @@
         }
         
         self.objects = [toAdd arrayByAddingObjectsFromArray:self.objects];
-        [self p_partitionConversationsByRecipient:self.objects];
+        [self p_partitionConversationsByPerson:self.objects];
         [self.tableView reloadData];
         
         // Refresh conversation view.
         if (self.conversationController) {
-            [self.conversationController updateConversations:[self p_conversationsForRecipient:self.conversationController.recipient]];
+            [self.conversationController updateConversations:[self p_conversationsWithPerson:self.conversationController.otherPerson]];
         }
     }];
 }
 
-/** Queries all conversations from, or to, a user, and the most up-to-date topic for these. */
+/** 
+  * Queries all conversations from, or to, a user, and the most up-to-date post for these conversations.
+  *
+  * Crucially, this query returns the most recent 100 posts as per the Parse API, and is sorted in
+  * descending order of recency.
+  */
 - (PFQuery *)p_queryForTable
 {
-    NSAssert([PFUser currentUser], @"User can't be nil");
+    PFUser *currentUser = [PFUser currentUser];
+    NSAssert(currentUser, @"User can't be nil");
     
     PFQuery *toUserQuery = [PFQuery queryWithClassName:kConversationClassKey];
-    [toUserQuery whereKey:kConversationToUserKey equalTo:[PFUser currentUser]];
+    [toUserQuery whereKey:kConversationToUserKey equalTo:currentUser];
     
     PFQuery *fromUserQuery = [PFQuery queryWithClassName:kConversationClassKey];
-    [fromUserQuery whereKey:kConversationFromUserKey equalTo:[PFUser currentUser]];
+    [fromUserQuery whereKey:kConversationFromUserKey equalTo:currentUser];
     
     PFQuery *query = [PFQuery orQueryWithSubqueries:@[toUserQuery, fromUserQuery]];
     
@@ -248,34 +255,45 @@
     }
 }
 
-- (NSMutableArray*)p_conversationsForRecipient:(PFObject*)recipient
+- (NSMutableArray*)p_conversationsWithPerson:(PFUser*)person
 {
-    NSString *recipientId = [recipient objectId];
-    NSMutableArray *conversations = self.recipientConversations[recipientId];
+    NSString *personId = [person objectId];
+    NSMutableArray *conversations = self.conversationsByPerson[personId];
     if (!conversations)
-        self.recipientConversations[recipientId] = conversations = [NSMutableArray array];
+        self.conversationsByPerson[personId] = conversations = [NSMutableArray array];
     return conversations;
 }
 
-- (void)p_partitionConversationsByRecipient:(NSArray*)conversations
+/**
+  * Takes in a list of conversations (assuming most recent to least); 
+  * output is a dictionary of other people => list of conversations (least recent => most recent).
+  * Also calls p_updateSummarizedObjects.
+  */
+- (void)p_partitionConversationsByPerson:(NSArray*)conversations
 {
-    NSMutableDictionary *recipientConversations = [NSMutableDictionary dictionary];
+    NSMutableDictionary *conversationsByPerson = [NSMutableDictionary dictionary];
     for (PFObject* conversation in conversations) {
-        NSString *recipientId = [[conversation otherPerson] objectId];
-        NSMutableArray *conversationsForRecipient = recipientConversations[recipientId];
-        if (!conversationsForRecipient)
-            recipientConversations[recipientId] = conversationsForRecipient = [NSMutableArray array];
-        [conversationsForRecipient addObject:conversation];
+        NSString *personId = [[conversation otherPerson] objectId];
+        NSMutableArray *existingConversation = conversationsByPerson[personId];
+        if (!existingConversation)
+            conversationsByPerson[personId] = existingConversation = [NSMutableArray array];
+        [existingConversation insertObject:conversation atIndex:0];
+//        [conversationsForRecipient addObject:conversation];
     }
-    self.recipientConversations = recipientConversations;
+    self.conversationsByPerson = conversationsByPerson;
     [self p_updateSummarizedObjects];
 }
 
+/**
+  * Sets all conversation summaries, which is a list of conversations. 
+  * The inner conversations are sorted from least recent => most recent conversation.
+  * The outer list is sorted by the most recent inner conversation for each entry, from newest to oldest.
+  */
 - (void)p_updateSummarizedObjects
 {
     // Ensure all results are sorted by recency
-    self.summarizedObjects = [[self.recipientConversations allValues] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        return [[(PFObject*)((NSArray*)obj2[0]) createdAt] compare:[(PFObject*)((NSArray*)obj1[0]) createdAt]];
+    self.summarizedObjects = [[self.conversationsByPerson allValues] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [[(PFObject*)[(NSArray*)obj2 lastObject] createdAt] compare:[(PFObject*)[(NSArray*)obj1 lastObject] createdAt]];
     }];
 }
 
