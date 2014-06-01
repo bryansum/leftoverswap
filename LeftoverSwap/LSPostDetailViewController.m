@@ -151,33 +151,33 @@ static TTTTimeIntervalFormatter *timeFormatter;
 
 - (void)setContactButtonStyle
 {
-  NSString *title = nil;
-  UIColor *backgroundColor = nil;
-  if ([[self.post objectForKey:kPostTakenKey] boolValue]) {
-    title = @"Taken";
-    backgroundColor = [UIColor colorWithWhite:0.537 alpha:1.000];
-  } else if ([[self.post objectForKey:kPostUserKey] isCurrentUser]) {
-    title = @"Mark as taken";
-    backgroundColor = [UIColor colorWithRed:0.900 green:0.247 blue:0.294 alpha:1.000];
-  } else {
-    title = @"contact";
-    backgroundColor = [UIColor colorWithRed:0.357 green:0.844 blue:0.435 alpha:1.000];
-  }
-  [self.contactButton setTitle:title forState:UIControlStateNormal];
-  self.contactButton.backgroundColor = backgroundColor;
-  
-  [self.view setNeedsDisplay];
+    NSString *title = nil;
+    UIColor *backgroundColor = nil;
+    if ([self.post isTaken]) {
+        title = @"Taken";
+        backgroundColor = [UIColor colorWithWhite:0.537 alpha:1.000];
+    } else if ([[self.post user] isCurrentUser]) {
+        title = @"Mark as taken";
+        backgroundColor = [UIColor colorWithRed:0.900 green:0.247 blue:0.294 alpha:1.000];
+    } else {
+        title = @"contact";
+        backgroundColor = [UIColor colorWithRed:0.357 green:0.844 blue:0.435 alpha:1.000];
+    }
+    [self.contactButton setTitle:title forState:UIControlStateNormal];
+    self.contactButton.backgroundColor = backgroundColor;
+    
+    [self.view setNeedsDisplay];
 }
 
 - (void)postWasTaken:(NSNotification *)note
 {
-  if (note.object == self) return;
-
-  PFObject *aPost = note.userInfo[kLSPostKey];
-  if ([[self.post objectId] isEqualToString:[aPost objectId]]) {
-    self.post = aPost;
-    [self setContactButtonStyle];
-  }
+    if (note.object == self) return;
+    
+    PFObject *aPost = note.userInfo[kLSPostKey];
+    if ([self.post isEqualToPost:aPost]) {
+        self.post = aPost;
+        [self setContactButtonStyle];
+    }
 }
 
 @end

@@ -67,7 +67,7 @@
     }
 }
 
-- (PFObject*)fromUser
+- (PFUser*)fromUser
 {
     return [self objectForKey:kConversationFromUserKey];
 }
@@ -120,9 +120,9 @@
 
 @end
 
-@implementation PFObject (User)
+@implementation PFUser (User)
 
-- (BOOL)isEqualToUser:(PFObject*)user
+- (BOOL)isEqualToUser:(PFUser*)user
 {
     return [self.objectId isEqualToString:user.objectId];
 }
@@ -130,6 +130,30 @@
 - (BOOL)isCurrentUser
 {
     return [self isEqualToUser:[PFUser currentUser]];
+}
+
+@end
+
+@implementation PFObject (Post)
+
+- (BOOL)isEqualToPost:(PFObject*)post
+{
+    return [self.objectId isEqualToString:post.objectId];
+}
+
+- (PFUser*)user
+{
+    return [self objectForKey:kPostUserKey];
+}
+
+- (BOOL)isTaken
+{
+    NSNumber *taken = [self objectForKey:kPostTakenKey];
+    if (!taken) {
+        return NO;
+    } else {
+        return [taken boolValue];
+    }
 }
 
 @end

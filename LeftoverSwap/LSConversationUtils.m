@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 #import "LSConstants.h"
 #import "PFObject+PrivateChannelName.h"
+#import "PFObject+Conversation.h"
 
 @implementation LSConversationUtils
 
@@ -37,14 +38,14 @@
 
 + (BOOL)conversations:(NSMutableArray*)conversations containsConversation:(PFObject*)newConversation
 {
-  BOOL doesExist = NO;
-  for(PFObject *conversation in conversations) {
-    if ([[conversation objectId] isEqualToString:[newConversation objectId]]) {
-      doesExist = YES;
-      break;
+    BOOL doesExist = NO;
+    for(PFObject *conversation in conversations) {
+        if ([conversation isEqualToConversation:newConversation]) {
+            doesExist = YES;
+            break;
+        }
     }
-  }
-  return doesExist;
+    return doesExist;
 }
 
 @end

@@ -220,8 +220,8 @@
 
 - (UIImageView *)collectionView:(JSQMessagesCollectionView *)collectionView bubbleImageViewForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    PFObject *fromUser = [self.conversations[indexPath.row] fromUser];
-    if ([fromUser isEqualToUser:[PFUser currentUser]]) {
+    PFUser *fromUser = [self.conversations[indexPath.row] fromUser];
+    if ([fromUser isCurrentUser]) {
         return [[UIImageView alloc] initWithImage:self.outgoingBubbleImageView.image
                                  highlightedImage:self.outgoingBubbleImageView.highlightedImage];
     } else {

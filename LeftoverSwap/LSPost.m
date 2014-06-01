@@ -20,6 +20,8 @@
 #import "LSConstants.h"
 #import "LSPostDetailViewController.h"
 
+#import "PFObject+Conversation.h"
+
 NSString *const kCantViewPostTitle = @"Can't view Post! Get closer";
 
 @interface LSPost ()
@@ -44,7 +46,7 @@ NSString *const kCantViewPostTitle = @"Can't view Post! Get closer";
 	if (self) {
     self.object = anObject;
     self.geopoint = [anObject objectForKey:kPostLocationKey];
-    self.user = [anObject objectForKey:kPostUserKey];
+    self.user = [anObject user];
 
     [anObject fetchIfNeeded]; 
     self.coordinate = CLLocationCoordinate2DMake(self.geopoint.latitude, self.geopoint.longitude);
@@ -82,7 +84,7 @@ NSString *const kCantViewPostTitle = @"Can't view Post! Get closer";
 
 -(MKPinAnnotationColor)pinColor
 {
-  return [[self.user objectId] isEqualToString:[[PFUser currentUser] objectId]] ? MKPinAnnotationColorRed : MKPinAnnotationColorGreen;
+  return [self.user isCurrentUser] ? MKPinAnnotationColorRed : MKPinAnnotationColorGreen;
 }
 
 -(PFFile *)thumbnail {

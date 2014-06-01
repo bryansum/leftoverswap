@@ -17,10 +17,10 @@
 - (void)sendPush;
 
 /** The person that's not the current user. */
-- (PFObject*)otherPerson;
+- (PFUser*)otherPerson;
 
-- (PFObject*)fromUser;
-- (PFObject*)toUser;
+- (PFUser*)fromUser;
+- (PFUser*)toUser;
 
 - (NSString *)name;
 
@@ -33,9 +33,19 @@
 
 @end
 
-@interface PFObject (User)
+@interface PFUser (User)
 
-- (BOOL)isEqualToUser:(PFObject*)user;
+- (BOOL)isEqualToUser:(PFUser*)user;
 - (BOOL)isCurrentUser;
 
 @end
+
+@interface PFObject (Post)
+
+- (BOOL)isEqualToPost:(PFObject*)post;
+
+- (PFUser*)user;
+- (BOOL)isTaken;
+
+@end
+

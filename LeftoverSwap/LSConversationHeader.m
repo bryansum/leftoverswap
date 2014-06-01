@@ -64,7 +64,7 @@ typedef NS_ENUM(NSUInteger, LSConversationHeaderState) {
   if (notification.object == self) return;
 
   PFObject *aPost = notification.userInfo[kLSPostKey];
-  if ([[self.post objectId] isEqualToString:[aPost objectId]]) {
+  if ([self.post isEqualToPost:aPost]) {
     [self setViewsForState:LSConversationHeaderStateTaken];
     [self setNeedsDisplay];
   }
@@ -74,7 +74,7 @@ typedef NS_ENUM(NSUInteger, LSConversationHeaderState) {
 {
   _post = post;
 
-  if ([[self.post objectForKey:kPostTakenKey] boolValue])
+  if ([self.post isTaken])
     self.state = LSConversationHeaderStateTaken;
   else if ([[self.post objectForKey:kPostUserKey] isCurrentUser])
     self.state = LSConversationHeaderStateSeller;

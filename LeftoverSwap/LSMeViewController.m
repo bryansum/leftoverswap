@@ -9,13 +9,14 @@
 #import "LSMeViewController.h"
 
 #import <Parse/Parse.h>
+#import <HockeySDK/HockeySDK.h>
 
 #import "LSLoginSignupViewController.h"
 #import "LSTabBarController.h"
 #import "LSAppDelegate.h"
 #import "LSMePostCell.h"
 #import "LSConstants.h"
-#import <HockeySDK/HockeySDK.h>
+#import "PFObject+Conversation.h"
 
 @interface LSMeViewController ()
 
@@ -140,7 +141,7 @@
   // The ConversationHeader view should have updated its own post and redrawn it.
   PFObject *takenPost = notification.userInfo[kLSPostKey];
   for (PFObject *post in self.objects) {
-    if ([[post objectId] isEqualToString:[takenPost objectId]]) {
+      if ([post isEqualToPost:takenPost]) {
       [post setObject:@(YES) forKey:kPostTakenKey];
     }
   }
