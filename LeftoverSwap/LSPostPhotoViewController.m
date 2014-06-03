@@ -15,6 +15,7 @@
 #import "LSPostPhotoViewController.h"
 #import "LSPaddedTextField.h"
 #import "UIImage+Resize.h"
+#import "UIImage+FixRotation.h"
 
 @interface LSPostPhotoViewController ()
 
@@ -89,6 +90,7 @@
 
 - (BOOL)shouldUploadImage:(UIImage *)anImage
 {
+    anImage = [anImage fixOrientation];
     UIImage *resizedImage = [anImage resizedImageWithContentMode:UIViewContentModeScaleAspectFit bounds:CGSizeMake(560.0f, 560.0f) interpolationQuality:kCGInterpolationHigh];
     UIImage *thumbnailImage = [anImage thumbnailImage:86.0f transparentBorder:0.0f cornerRadius:10.0f interpolationQuality:kCGInterpolationDefault];
     
