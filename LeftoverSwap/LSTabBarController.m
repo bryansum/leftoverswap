@@ -33,7 +33,7 @@
 @synthesize conversationNavigationController;
 @synthesize conversationSummaryController;
 
-- (id)init
+- (instancetype)init
 {
   self = [super init];
   if (self) {

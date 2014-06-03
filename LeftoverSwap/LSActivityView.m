@@ -20,7 +20,7 @@ static CGFloat const kPAWActivityViewActivityIndicatorPadding = 10.f;
 
 @implementation LSActivityView
 
-- (id)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
 		self.label = [[UILabel alloc] initWithFrame:CGRectZero];

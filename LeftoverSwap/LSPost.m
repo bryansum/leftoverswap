@@ -41,7 +41,7 @@ NSString *const kCantViewPostTitle = @"Can't view Post! Get closer";
 
 @implementation LSPost
 
-- (id)initWithPFObject:(PFObject *)anObject {
+- (instancetype)initWithPFObject:(PFObject *)anObject {
   self = [super init];
 	if (self) {
     self.object = anObject;

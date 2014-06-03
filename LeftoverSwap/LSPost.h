@@ -47,7 +47,7 @@ extern NSString *const kCantViewPostTitle;
 - (void)setupAnnotationView:(MKPinAnnotationView*)pinView;
 - (UIViewController*)viewControllerWithDelegate:(id<LSPostDetailDelegate>)delegate;
 
-- (id)initWithPFObject:(PFObject *)object;
+- (instancetype)initWithPFObject:(PFObject *)object;
 - (BOOL)equalToPost:(LSPost *)aPost;
 
 @end

@@ -20,6 +20,6 @@
 
 @property (nonatomic, weak) id<LSNewConversationDelegate> conversationDelegate;
 
--initWithPost:(PFObject*)post;
+- (instancetype)initWithPost:(PFObject*)post;
 
 @end

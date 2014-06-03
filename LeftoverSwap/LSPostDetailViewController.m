@@ -30,7 +30,7 @@ static TTTTimeIntervalFormatter *timeFormatter;
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kLSPostTakenNotification object:nil];
 }
 
-- (id)initWithPost:(PFObject*)post
+- (instancetype)initWithPost:(PFObject*)post
 {
   self = [super init];
   if (self) {

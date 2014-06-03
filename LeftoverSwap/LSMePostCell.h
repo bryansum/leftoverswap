@@ -14,7 +14,7 @@
 
 + (NSInteger)heightForCell;
 
--(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 
 -(void)setPost:(PFObject*)post;
 

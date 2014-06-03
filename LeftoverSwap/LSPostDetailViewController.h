@@ -20,7 +20,7 @@
 
 @interface LSPostDetailViewController : UIViewController
 
-- (id)initWithPost:(PFObject*)post;
+- (instancetype)initWithPost:(PFObject*)post;
 
 @property (nonatomic, weak) id<LSPostDetailDelegate> delegate;
 

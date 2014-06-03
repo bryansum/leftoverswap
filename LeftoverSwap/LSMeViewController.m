@@ -34,7 +34,7 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kLSUserLogInNotification object:nil];
 }
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (instancetype)initWithStyle:(UITableViewStyle)style
 {
   self = [super initWithStyle:style];
   if (self) {

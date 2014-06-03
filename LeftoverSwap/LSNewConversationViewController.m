@@ -17,7 +17,7 @@
 
 @implementation LSNewConversationViewController
 
-- (id)initWithPost:(PFObject*)post
+- (instancetype)initWithPost:(PFObject*)post
 {
     self = [super init];
     if (self) {

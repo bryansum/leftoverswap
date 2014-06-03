@@ -10,6 +10,6 @@
 
 @interface LSMeViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate>
 
-- (id)initWithStyle:(UITableViewStyle)style;
+- (instancetype)initWithStyle:(UITableViewStyle)style;
 
 @end

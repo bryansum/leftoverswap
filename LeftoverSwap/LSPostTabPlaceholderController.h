@@ -16,7 +16,7 @@
  */
 @interface LSPostTabPlaceholderController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, LSPostPhotoViewControllerDelegate>
 
-- (id)init;
+- (instancetype)init;
 - (UIImagePickerController*)imagePickerController;
 
 @end

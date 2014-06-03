@@ -33,7 +33,7 @@ typedef NS_ENUM(NSUInteger, LSConversationHeaderState) {
   [[NSNotificationCenter defaultCenter] removeObserver:self name:kLSPostTakenNotification object:nil];
 }
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
