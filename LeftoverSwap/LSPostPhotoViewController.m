@@ -108,7 +108,7 @@
         [[UIApplication sharedApplication] endBackgroundTask:self.fileUploadBackgroundTaskId];
     }];
     
-    NSLog(@"Requested background expiration task with id %lu for LeftoverSwap photo upload", (NSUInteger)self.fileUploadBackgroundTaskId);
+    NSLog(@"Requested background expiration task with id %ld for LeftoverSwap photo upload", (long)self.fileUploadBackgroundTaskId);
     [self.photoFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             NSLog(@"Photo uploaded successfully");
