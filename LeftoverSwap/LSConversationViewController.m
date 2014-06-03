@@ -58,7 +58,7 @@
 
 #pragma mark - NSObject
 
-- (id)initWithConversations:(NSArray*)conversations otherPerson:(PFUser*)person
+- (instancetype)initWithConversations:(NSArray*)conversations otherPerson:(PFUser*)person
 {
     NSParameterAssert(conversations != nil);
     NSParameterAssert(person != nil);
@@ -72,7 +72,7 @@
     return self;
 }
 
-#pragma mark - UIView
+#pragma mark - UIViewController
 
 - (void)viewDidLoad
 {
@@ -94,11 +94,24 @@
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
 
-    
+    [self scrollToBottomAnimated:NO];
 //    [self p_setHeaderView];
 }
 
 #pragma mark - LSConversationViewController
+
+- (void)pushIntoNavigationController:(UINavigationController*)navigationController
+{
+    // HACK: When the tab bar is translucent, animating the push causes will
+    // swap the translucent BG only after viewDidLoad in CVC. This causes an
+    // unsightly translucent BG pop. Turning off the translucency during animation temporarily
+    // (to be turned on in viewDidLoad in the other VC) fixes this issue.
+    //
+    // It seems like this translucency gets reset after animating anyway, so we don't need to reset
+    // it anywhere else.
+    navigationController.tabBarController.tabBar.translucent = NO;
+    [navigationController pushViewController:self animated:YES];
+}
 
 /**
  * This logic is to make it so that locally added conversations

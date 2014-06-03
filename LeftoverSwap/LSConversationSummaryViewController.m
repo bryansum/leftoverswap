@@ -78,7 +78,8 @@
     conversationController.conversationDelegate = self;
     conversationController.hidesBottomBarWhenPushed = YES;
     self.conversationController = conversationController;
-    [self.navigationController pushViewController:conversationController animated:YES];
+    
+    [conversationController pushIntoNavigationController:self.navigationController];
 }
 
 #pragma mark - UITableViewDataSource
@@ -115,7 +116,8 @@
     conversationController.conversationDelegate = self;
     conversationController.hidesBottomBarWhenPushed = YES;
     self.conversationController = conversationController;
-    [self.navigationController pushViewController:conversationController animated:NO];
+    
+    [conversationController pushIntoNavigationController:self.navigationController];
     [conversationController addMessage:text forPost:post];
 }
 

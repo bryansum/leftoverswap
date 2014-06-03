@@ -38,6 +38,9 @@
     
     self.navigationItem.title = @"New Conversation";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelPressed:)];
+    
+    // Remove the camera button
+    self.inputToolbar.contentView.leftBarButtonItem = nil;
 }
 
 - (void)cancelPressed:(id)sender

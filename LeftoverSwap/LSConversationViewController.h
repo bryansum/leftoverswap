@@ -54,6 +54,8 @@
 - (void)updateConversations:(NSMutableArray*)conversations;
 - (void)addMessage:(NSString*)text forPost:(PFObject*)post;
 
-- (id)initWithConversations:(NSArray*)conversations otherPerson:(PFUser*)person;
+- (instancetype)initWithConversations:(NSArray*)conversations otherPerson:(PFUser*)person;
+
+- (void)pushIntoNavigationController:(UINavigationController*)navigationController;
 
 @end
