@@ -35,7 +35,7 @@ typedef NS_ENUM(NSUInteger, LSConversationHeaderState) {
 
 - (void)dealloc
 {
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:kLSPostTakenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kLSPostTakenNotification object:nil];
 }
 
 #pragma mark - UIView
@@ -44,24 +44,12 @@ typedef NS_ENUM(NSUInteger, LSConversationHeaderState) {
 {
     self = [super initWithFrame:frame];
     if (self) {
-      self.backgroundColor = [UIColor whiteColor];
-      self.state = LSConversationHeaderStateDefault;
-      self.imageView = [[PFImageView alloc] initWithFrame:CGRectMake(8, 7, 35, 35)];
-      self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-      
-      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(p_postWasTaken:) name:kLSPostTakenNotification object:nil];
+        self.backgroundColor = [UIColor whiteColor];
+        self.state = LSConversationHeaderStateDefault;
+        self.imageView = [[PFImageView alloc] initWithFrame:CGRectMake(8, 7, 35, 35)];
+        self.imageView.contentMode = UIViewContentModeScaleAspectFit;
 
-//      NSString *timeString = [timeFormatter stringForTimeIntervalFromDate:[NSDate date] toDate:[self.post createdAt]];
-//      CGSize timeLabelSize = [timeString sizeWithFont:[UIFont systemFontOfSize:11] constrainedToSize:CGSizeMake(nameLabelMaxWidth, CGFLOAT_MAX) lineBreakMode:UILineBreakModeTailTruncation];
-//      UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(timeLabelX, nameLabelY+userButtonSize.height, timeLabelSize.width, timeLabelSize.height)];
-//      [timeLabel setText:timeString];
-//      [timeLabel setFont:[UIFont systemFontOfSize:11.0f]];
-//      [timeLabel setTextColor:[UIColor colorWithRed:124.0f/255.0f green:124.0f/255.0f blue:124.0f/255.0f alpha:1.0f]];
-//      [timeLabel setShadowColor:[UIColor colorWithWhite:1.0f alpha:0.750f]];
-//      [timeLabel setShadowOffset:CGSizeMake(0.0f, 1.0f)];
-//      [timeLabel setBackgroundColor:[UIColor clearColor]];
-//      [self addSubview:timeLabel];
-//
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(p_postWasTaken:) name:kLSPostTakenNotification object:nil];
     }
     return self;
 }
@@ -173,13 +161,13 @@ typedef NS_ENUM(NSUInteger, LSConversationHeaderState) {
             break;
         case LSConversationHeaderStateExpired:
             
-            expiredLabel = [[UILabel alloc] initWithFrame:CGRectMake(260, 13, 50, 25)];
-            expiredLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:17];
+            expiredLabel = [[UILabel alloc] initWithFrame:CGRectMake(225, 13, 85, 25)];
+            expiredLabel.font = [UIFont fontWithName:@"HelveticaNeue-Italic" size:17];
             expiredLabel.textColor = [UIColor colorWithWhite:0.537 alpha:1.000];
             expiredLabel.text = @"Expired";
             expiredLabel.textAlignment = NSTextAlignmentRight;
             expiredLabel.backgroundColor = [UIColor clearColor];
-            [self addSubview:takenLabel];
+            [self addSubview:expiredLabel];
             
             break;
     }
