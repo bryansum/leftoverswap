@@ -34,6 +34,8 @@ static TTTTimeIntervalFormatter *timeFormatter;
 
 - (void)dealloc
 {
+    [self.descriptionView removeObserver:self forKeyPath:@"contentSize"];
+
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kLSPostTakenNotification object:nil];
 }
 
@@ -87,11 +89,32 @@ static TTTTimeIntervalFormatter *timeFormatter;
     // Why is this set? http://stackoverflow.com/questions/19113673/uitextview-setting-font-not-working-with-ios-6-on-xcode-5
     self.descriptionView.selectable = NO;
 
+    [self.descriptionView addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
+
     self.contactButton.layer.cornerRadius = 5;
     self.contactButton.clipsToBounds = YES;
     [self.contactButton addTarget:self action:@selector(p_contact:) forControlEvents:UIControlEventTouchUpInside];
 
     [self p_setContactButtonStyle];
+}
+
+#pragma mark - NSKeyValueObserving
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+    UITextView *tv = object;
+    // Center vertical alignment
+    CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height * [tv zoomScale])/2.0;
+    topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
+    tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
+    //
+    //    //Bottom vertical alignment
+    //    CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height);
+    //    topCorrect = (topCorrect <0.0 ? 0.0 : topCorrect);
+    //    tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
 }
 
 #pragma mark - UINavigationBar

@@ -25,9 +25,9 @@ static const NSInteger kResetPasswordAlertView = 20;
 
 @interface LSLoginViewController ()
 
-- (void)processFieldEntries;
+- (void)p_validateFieldsAndLogin;
 - (void)textInputChanged:(NSNotification *)note;
-- (BOOL)shouldEnableDoneButton;
+- (BOOL)p_shouldEnableDoneButton;
 
 @property (nonatomic) IBOutlet UIButton *resetPasswordButton;
 
@@ -39,12 +39,14 @@ static const NSInteger kResetPasswordAlertView = 20;
 
 - (void)viewDidLoad
 {
-  [super viewDidLoad];
-  // Do any additional setup after loading the view from its nib.
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textInputChanged:) name:UITextFieldTextDidChangeNotification object:self.usernameField];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textInputChanged:) name:UITextFieldTextDidChangeNotification object:self.passwordField];
 
-  self.resetPasswordButton.hidden = YES;
+    self.resetPasswordButton.layer.cornerRadius = 5;
+    self.resetPasswordButton.clipsToBounds = YES;
+
 	self.doneButton.enabled = NO;
 }
 
@@ -64,7 +66,7 @@ static const NSInteger kResetPasswordAlertView = 20;
 
 - (IBAction)cancel:(id)sender
 {
-  [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)done:(id)sender
@@ -72,48 +74,48 @@ static const NSInteger kResetPasswordAlertView = 20;
 	[self.usernameField resignFirstResponder];
 	[self.passwordField resignFirstResponder];
 
-	[self processFieldEntries];
+	[self p_validateFieldsAndLogin];
 }
 
 - (IBAction)resetPassword:(id)sender
 {
-  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Reset password" message:@"Please enter your email address:" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Done", nil];
-  alert.tag = kResetPasswordAlertView;
-  alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-  UITextField *alertTextField = [alert textFieldAtIndex:0];
-  alertTextField.keyboardType = UIKeyboardTypeEmailAddress;
-  alertTextField.placeholder = @"eat@leftoverswap.com";
-  [alert show];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Reset password" message:@"Please enter your email address:" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Done", nil];
+    alert.tag = kResetPasswordAlertView;
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    UITextField *alertTextField = [alert textFieldAtIndex:0];
+    alertTextField.keyboardType = UIKeyboardTypeEmailAddress;
+    alertTextField.placeholder = @"eat@leftoverswap.com";
+    [alert show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-  if (alertView.tag != kResetPasswordAlertView) return;
-  if (buttonIndex == alertView.firstOtherButtonIndex) { // Done
-    UITextField *alertTextField = [alertView textFieldAtIndex:0];
-    NSString *email = alertTextField.text;
-    
-    [PFUser requestPasswordResetForEmailInBackground:email block:^(BOOL succeeded, NSError *error) {
-      NSString *message = error.userInfo[@"error"];
-      if (succeeded)
-        message = @"Check your email for reset instructions!";
-      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Reset password" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-      alert.alertViewStyle = UIAlertViewStyleDefault;
-      [alert show];
-    }];
-  }
+    if (alertView.tag != kResetPasswordAlertView) return;
+    if (buttonIndex == alertView.firstOtherButtonIndex) { // Done
+        UITextField *alertTextField = [alertView textFieldAtIndex:0];
+        NSString *email = alertTextField.text;
+
+        [PFUser requestPasswordResetForEmailInBackground:email block:^(BOOL succeeded, NSError *error) {
+            NSString *message = error.userInfo[@"error"];
+            if (succeeded)
+                message = @"Check your email for reset instructions!";
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Reset password" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+            alert.alertViewStyle = UIAlertViewStyleDefault;
+            [alert show];
+        }];
+    }
 }
 
 - (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView
 {
-  if (alertView.tag != kResetPasswordAlertView) return YES;
-  UITextField *alertTextField = [alertView textFieldAtIndex:0];
-  return alertTextField.text.length != 0;
+    if (alertView.tag != kResetPasswordAlertView) return YES;
+    UITextField *alertTextField = [alertView textFieldAtIndex:0];
+    return alertTextField.text.length != 0;
 }
 
 #pragma mark - UITextField text field change notifications and helper methods
 
-- (BOOL)shouldEnableDoneButton
+- (BOOL)p_shouldEnableDoneButton
 {
 	BOOL enableDoneButton = NO;
 	if (self.usernameField.text != nil &&
@@ -127,7 +129,7 @@ static const NSInteger kResetPasswordAlertView = 20;
 
 - (void)textInputChanged:(NSNotification *)note
 {
-	self.doneButton.enabled = [self shouldEnableDoneButton];
+	self.doneButton.enabled = [self p_shouldEnableDoneButton];
 }
 
 #pragma mark - UITextFieldDelegate methods
@@ -139,9 +141,9 @@ static const NSInteger kResetPasswordAlertView = 20;
 	}
 	if (textField == self.passwordField) {
 		[self.passwordField resignFirstResponder];
-		[self processFieldEntries];
+		[self p_validateFieldsAndLogin];
 	}
-
+    
 	return YES;
 }
 
@@ -149,7 +151,7 @@ static const NSInteger kResetPasswordAlertView = 20;
 
 #pragma mark Field validation
 
-- (void)processFieldEntries
+- (void)p_validateFieldsAndLogin
 {
 	// Get the username text, store it in the app delegate for now
 	NSString *username = self.usernameField.text;
@@ -202,13 +204,13 @@ static const NSInteger kResetPasswordAlertView = 20;
 	UILabel *label = activityView.label;
 	label.text = @"Logging in";
 	label.font = [UIFont boldSystemFontOfSize:20.f];
-  activityView.label = label;
+    activityView.label = label;
 	[activityView.activityIndicator startAnimating];
 	[activityView layoutSubviews];
 
 	[self.view addSubview:activityView];
 
-//  __weak LSLoginViewController *weakSelf = self;
+    //  __weak LSLoginViewController *weakSelf = self;
 
 	[PFUser logInWithUsernameInBackground:username password:password block:^(PFUser *user, NSError *error) {
 		// Tear down the activity view in all cases.
@@ -216,30 +218,20 @@ static const NSInteger kResetPasswordAlertView = 20;
 		[activityView removeFromSuperview];
 
 		if (user) {
-      [self.delegate loginControllerDidFinish:self];
+            [self.delegate loginControllerDidFinish:self];
+            return;
+        }
 
-		} else {
-			// Didn't get a user.
-			NSLog(@"%s didn't get a user!", __PRETTY_FUNCTION__);
+        // Didn't get a user.
+        NSLog(@"%s didn't get a user!", __PRETTY_FUNCTION__);
 
-			// Re-enable the done button if we're tossing them back into the form.
-			self.doneButton.enabled = [self shouldEnableDoneButton];
-			UIAlertView *alertView = nil;
+        // Re-enable the done button if we're tossing them back into the form.
+        self.doneButton.enabled = [self p_shouldEnableDoneButton];
 
-			if (error == nil) {
-				// the username or password is probably wrong.
-				alertView = [[UIAlertView alloc] initWithTitle:@"Couldn’t log in:\nThe username or password were wrong." message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-			} else {
-				// Something else went horribly wrong:
-				alertView = [[UIAlertView alloc] initWithTitle:[[error userInfo] objectForKey:@"error"] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-			}
-			[alertView show];
+        self.resetPasswordButton.hidden = NO;
 
-      self.resetPasswordButton.hidden = NO;
-
-			// Bring the keyboard back up, because they'll probably need to change something.
-			[self.usernameField becomeFirstResponder];
-		}
+        // Bring the keyboard back up, because they'll probably need to change something.
+        [self.usernameField becomeFirstResponder];
 	}];
 }
 
