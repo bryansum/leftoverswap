@@ -9,6 +9,8 @@
 #import "LSConversationHeader.h"
 
 #import <Parse/Parse.h>
+#import <QuartzCore/QuartzCore.h>
+
 #import "LSConstants.h"
 #import "PFObject+Conversation.h"
 #import "LSConversationUtils.h"

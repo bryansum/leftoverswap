@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0805F28917A7940300963343 /* LSPostPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0805F28817A7940300963343 /* LSPostPhotoViewController.m */; };
 		0823B42817A0A4DE00FE86FF /* LSConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0823B42717A0A4DE00FE86FF /* LSConstants.m */; };
-		0823B42D17A0B11500FE86FF /* LSWelcomeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0823B42C17A0B11500FE86FF /* LSWelcomeButton.m */; };
 		083D474017DD2C670081FE4B /* LSNewConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 083D473F17DD2C670081FE4B /* LSNewConversationViewController.m */; };
 		083D474317DD31CA0081FE4B /* LSConversationHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 083D474217DD31CA0081FE4B /* LSConversationHeader.m */; };
 		083D474817DF964C0081FE4B /* PFObject+Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 083D474717DF964C0081FE4B /* PFObject+Conversation.m */; };
@@ -80,8 +79,6 @@
 		0805F28817A7940300963343 /* LSPostPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSPostPhotoViewController.m; sourceTree = "<group>"; };
 		0823B42617A0A4DE00FE86FF /* LSConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSConstants.h; sourceTree = "<group>"; };
 		0823B42717A0A4DE00FE86FF /* LSConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSConstants.m; sourceTree = "<group>"; };
-		0823B42B17A0B11500FE86FF /* LSWelcomeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSWelcomeButton.h; sourceTree = "<group>"; };
-		0823B42C17A0B11500FE86FF /* LSWelcomeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSWelcomeButton.m; sourceTree = "<group>"; };
 		083D473E17DD2C670081FE4B /* LSNewConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSNewConversationViewController.h; sourceTree = "<group>"; };
 		083D473F17DD2C670081FE4B /* LSNewConversationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSNewConversationViewController.m; sourceTree = "<group>"; };
 		083D474117DD31CA0081FE4B /* LSConversationHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSConversationHeader.h; sourceTree = "<group>"; };
@@ -209,8 +206,6 @@
 				08AB64F517BEDC1000EF8D0D /* Conversation */,
 				08EB0F5617B3024C00C5E4FF /* LSActivityView.h */,
 				08EB0F5717B3024C00C5E4FF /* LSActivityView.m */,
-				0823B42B17A0B11500FE86FF /* LSWelcomeButton.h */,
-				0823B42C17A0B11500FE86FF /* LSWelcomeButton.m */,
 				08F8DCC217AF7E6300A6AE60 /* LSPaddedTextField.h */,
 				08F8DCC317AF7E6300A6AE60 /* LSPaddedTextField.m */,
 			);
@@ -559,7 +554,6 @@
 				08F455A4179F7C8200CB7E2D /* main.m in Sources */,
 				08F455A8179F7C8200CB7E2D /* LSAppDelegate.m in Sources */,
 				0823B42817A0A4DE00FE86FF /* LSConstants.m in Sources */,
-				0823B42D17A0B11500FE86FF /* LSWelcomeButton.m in Sources */,
 				0805F28917A7940300963343 /* LSPostPhotoViewController.m in Sources */,
 				08F8DCC417AF7E6300A6AE60 /* LSPaddedTextField.m in Sources */,
 				08EB0F5017B300D600C5E4FF /* LSSignupViewController.m in Sources */,
