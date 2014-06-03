@@ -47,6 +47,7 @@
 @property (nonatomic) NSMutableArray *locallyAddedConversations; /* PFObject */
 @property (nonatomic) PFUser *otherPerson;
 @property (nonatomic) NSMutableArray *conversations; /* PFObject */
+@property (nonatomic, weak) UINavigationController *navigationController;
 //@property (nonatomic) LSConversationHeader *header;
 
 @property (strong, nonatomic) UIImageView *outgoingBubbleImageView;
@@ -114,6 +115,7 @@
     // swap the translucent BG only after viewDidLoad in CVC. This causes an
     // unsightly translucent BG pop. Turning off the translucency during animation temporarily
     // (to be turned on in viewDidLoad in the other VC) fixes this issue.
+    self.navigationController = navigationController;
     navigationController.tabBarController.tabBar.translucent = NO;
     [navigationController pushViewController:self animated:YES];
 }
