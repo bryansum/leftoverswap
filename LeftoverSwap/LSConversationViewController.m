@@ -98,6 +98,14 @@
 //    [self p_setHeaderView];
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    // HACK: Because we had previously turned off translucency for the VC in
+    // pushIntoNavigationController, turn it back on as we're popping.
+    self.navigationController.tabBarController.tabBar.translucent = YES;
+}
+
 #pragma mark - LSConversationViewController
 
 - (void)pushIntoNavigationController:(UINavigationController*)navigationController
@@ -106,9 +114,6 @@
     // swap the translucent BG only after viewDidLoad in CVC. This causes an
     // unsightly translucent BG pop. Turning off the translucency during animation temporarily
     // (to be turned on in viewDidLoad in the other VC) fixes this issue.
-    //
-    // It seems like this translucency gets reset after animating anyway, so we don't need to reset
-    // it anywhere else.
     navigationController.tabBarController.tabBar.translucent = NO;
     [navigationController pushViewController:self animated:YES];
 }
