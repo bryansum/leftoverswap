@@ -46,6 +46,7 @@
 
 - (PFUser*)user;
 - (BOOL)isTaken;
+- (BOOL)isExpired;
 
 @end
 

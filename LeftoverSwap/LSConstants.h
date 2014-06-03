@@ -6,6 +6,9 @@
 //  Copyright (c) 2013 LeftoverSwap. All rights reserved.
 //
 
+#pragma mark - Application constants
+extern NSTimeInterval const kLSTimeToExpiration; // 2 weeks
+
 #pragma mark - PFObject User Class
 // Field keys
 extern NSString *const kUserDisplayNameKey;

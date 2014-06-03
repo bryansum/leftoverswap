@@ -156,4 +156,10 @@
     }
 }
 
+- (BOOL)isExpired
+{
+    NSDate *createdAt = [self createdAt];
+    return -[createdAt timeIntervalSinceNow] > kLSTimeToExpiration;
+}
+
 @end

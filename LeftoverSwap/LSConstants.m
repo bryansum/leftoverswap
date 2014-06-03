@@ -8,6 +8,9 @@
 
 #import "LSConstants.h"
 
+#pragma mark - Application constants
+NSTimeInterval const kLSTimeToExpiration = 2 * 7 * (60 * 60 * 24); // 2 weeks
+
 #pragma mark - PFObject User Class
 // Field keys
 NSString *const kUserDisplayNameKey = @"username";
