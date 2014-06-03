@@ -137,6 +137,8 @@ typedef NS_ENUM(NSUInteger, LSConversationHeaderState) {
             takenButton.backgroundColor = [UIColor colorWithRed:0.900 green:0.247 blue:0.294 alpha:1.000];
             [takenButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [takenButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+            takenButton.layer.cornerRadius = 3;
+            takenButton.clipsToBounds = YES;
             //      [takenButton setTitleEdgeInsets:UIEdgeInsetsMake(1, 1, 1, 1)];
             //      [takenButton.layer setBorderColor:[UIColor colorWithWhite:0.797 alpha:1.000].CGColor];
             //      [takenButton.layer setBorderWidth:1];

@@ -18,6 +18,7 @@
 		084157C017E8C0400090C2E2 /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 084157BC17E8C0400090C2E2 /* Icon-76.png */; };
 		084157C117E8C0400090C2E2 /* Icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 084157BD17E8C0400090C2E2 /* Icon-120.png */; };
 		084157C217E8C0400090C2E2 /* Icon-152.png in Resources */ = {isa = PBXBuildFile; fileRef = 084157BE17E8C0400090C2E2 /* Icon-152.png */; };
+		0888D7BE193E37580054D81D /* LSPostDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0888D7BD193E37570054D81D /* LSPostDetailView.xib */; };
 		08AB64F317BEB55D00EF8D0D /* LSPostDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AB64F117BEB55C00EF8D0D /* LSPostDetailViewController.m */; };
 		08AB64F817C034D700EF8D0D /* LSTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AB64F717C034D600EF8D0D /* LSTabBarController.m */; };
 		08D1880518009DF500C45CA0 /* LoginSignup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08D1880418009DF500C45CA0 /* LoginSignup.storyboard */; };
@@ -93,6 +94,7 @@
 		084157BC17E8C0400090C2E2 /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76.png"; sourceTree = "<group>"; };
 		084157BD17E8C0400090C2E2 /* Icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-120.png"; sourceTree = "<group>"; };
 		084157BE17E8C0400090C2E2 /* Icon-152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-152.png"; sourceTree = "<group>"; };
+		0888D7BD193E37570054D81D /* LSPostDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LSPostDetailView.xib; sourceTree = "<group>"; };
 		08AB64F017BEB55C00EF8D0D /* LSPostDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSPostDetailViewController.h; sourceTree = "<group>"; };
 		08AB64F117BEB55C00EF8D0D /* LSPostDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSPostDetailViewController.m; sourceTree = "<group>"; };
 		08AB64F617C034D400EF8D0D /* LSTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSTabBarController.h; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 			children = (
 				08AB64F017BEB55C00EF8D0D /* LSPostDetailViewController.h */,
 				08AB64F117BEB55C00EF8D0D /* LSPostDetailViewController.m */,
+				0888D7BD193E37570054D81D /* LSPostDetailView.xib */,
 			);
 			name = Detail;
 			sourceTree = "<group>";
@@ -501,6 +504,7 @@
 				5DA3557F17CAE8C700CEC3D3 /* plain.png in Resources */,
 				5DA3558017CAE8C700CEC3D3 /* plain2.png in Resources */,
 				5DA3558117CAE8C700CEC3D3 /* plain3.png in Resources */,
+				0888D7BE193E37580054D81D /* LSPostDetailView.xib in Resources */,
 				5DA3558217CAE8C700CEC3D3 /* plain4.png in Resources */,
 				5D77658517D781F500F34A02 /* GPSicon.png in Resources */,
 				5D77658617D781F500F34A02 /* GPSicon@2x.png in Resources */,

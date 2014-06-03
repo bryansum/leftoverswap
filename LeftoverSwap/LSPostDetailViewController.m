@@ -15,9 +15,14 @@
 
 @interface LSPostDetailViewController ()
 
-@property (nonatomic) IBOutlet UIButton *contactButton;
-@property (nonatomic) PFObject *post;
-@property (nonatomic) PFUser *seller;
+@property (nonatomic, strong) IBOutlet PFImageView *imageView;
+@property (nonatomic, strong) IBOutlet UILabel *titleLabel;
+@property (nonatomic, strong) IBOutlet UILabel *detailsLabel;
+@property (nonatomic, strong) IBOutlet UITextView *descriptionView;
+@property (nonatomic, strong) IBOutlet UIButton *contactButton;
+@property (nonatomic, strong) IBOutlet UIView *translucentInfoContainer;
+@property (nonatomic, strong) PFObject *post;
+@property (nonatomic, strong) PFUser *seller;
 
 @end
 
@@ -25,131 +30,110 @@ static TTTTimeIntervalFormatter *timeFormatter;
 
 @implementation LSPostDetailViewController
 
+#pragma mark - NSObject
+
 - (void)dealloc
 {
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:kLSPostTakenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kLSPostTakenNotification object:nil];
 }
 
 - (instancetype)initWithPost:(PFObject*)post
 {
-  self = [super init];
-  if (self) {
-    self.post = post;
-    self.seller = [post objectForKey:kPostUserKey];
-    
-    if (!timeFormatter) {
-      timeFormatter = [[TTTTimeIntervalFormatter alloc] init];
+    self = [super init];
+    if (self) {
+        self.post = post;
+        self.seller = [post objectForKey:kPostUserKey];
+
+        if (!timeFormatter) {
+            timeFormatter = [[TTTTimeIntervalFormatter alloc] init];
+        }
+
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(p_cancel:)];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(p_postWasTaken:) name:kLSPostTakenNotification object:nil];
     }
-    
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(cancel:)];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(postWasTaken:) name:kLSPostTakenNotification object:nil];
-  }
-  return self;
+    return self;
 }
 
-#pragma mark - View lifecycle
+#pragma mark - UIViewController
 
 - (void)viewDidLoad
 {
-  [super viewDidLoad];
-  
-  self.view.backgroundColor = [UIColor blackColor];
+    [super viewDidLoad];
 
-  NSInteger adjustBottom = 548 - self.view.bounds.size.height;
+    self.view.backgroundColor = [UIColor blackColor];
 
-  PFImageView *imageView = [[PFImageView alloc] initWithFrame:self.view.bounds];
-  imageView.backgroundColor = [UIColor clearColor];
-  imageView.contentMode = UIViewContentModeScaleAspectFill;
-  imageView.file = [self.post objectForKey:kPostImageKey];
-  [imageView loadInBackground];
-  [self.view addSubview:imageView];
-  
-  UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 352 - adjustBottom, 280, 21)];
-  titleLabel.font = [UIFont boldSystemFontOfSize:17];
-  titleLabel.backgroundColor = [UIColor colorWithWhite:1 alpha:0.8];
-  titleLabel.text = [NSString stringWithFormat:@" %@", [self.post objectForKey:kPostTitleKey]];
-  [self.view addSubview:titleLabel];
-  
-  UILabel *postDetailsLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 373 - adjustBottom, 280, 23)];
-  postDetailsLabel.font = [UIFont systemFontOfSize:12];
-  postDetailsLabel.backgroundColor = [UIColor colorWithWhite:1 alpha:0.8];
-  [self.seller fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-    NSString *postDate = [timeFormatter stringForTimeIntervalFromDate:[NSDate date] toDate:self.post.createdAt];
-    NSString *name = [self.seller objectForKey:kUserDisplayNameKey];
-    postDetailsLabel.text = [NSString stringWithFormat:@"  Posted by %@ about %@", name, postDate];
-    [postDetailsLabel setNeedsDisplay];
-  }];
-  [self.view addSubview:postDetailsLabel];
+//    NSInteger adjustBottom = 548 - self.view.bounds.size.height;
 
-//  UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 396 - adjustBottom, 280, 47)];
-//  descriptionLabel.font = [UIFont systemFontOfSize:14];
-//  descriptionLabel.backgroundColor = [UIColor colorWithWhite:1 alpha:0.8];
-//  descriptionLabel.text = [NSString stringWithFormat:@" %@", [self.post objectForKey:kPostDescriptionKey]];
-//  descriptionLabel.numberOfLines = 0;
-  
-  UITextView *descriptionView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 280, 47)];
-  descriptionView.font = [UIFont systemFontOfSize:14];
-  descriptionView.text = [self.post objectForKey:kPostDescriptionKey];
-  descriptionView.scrollEnabled = YES;
-  descriptionView.editable = NO;
-  descriptionView.backgroundColor = [UIColor clearColor];
-  
-  UIView *descriptionWrapView = [[UIView alloc] initWithFrame:CGRectMake(20, 396 - adjustBottom, 280, 47)];
-  [descriptionWrapView addSubview: descriptionView];
-  descriptionWrapView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.8];
-  [self.view addSubview:descriptionWrapView];
-  
-  UIButton *contactButton = [UIButton buttonWithType:UIButtonTypeCustom];
-  [contactButton addTarget:self action:@selector(contact:) forControlEvents:UIControlEventTouchUpInside];
-  contactButton.frame = CGRectMake(20, 451 - adjustBottom, 280, 44);
-  contactButton.titleLabel.font = [UIFont boldSystemFontOfSize:19];
-  self.contactButton = contactButton;
-  [self.view addSubview:contactButton];
-  
-  [self setContactButtonStyle];
-}
+    self.translucentInfoContainer.layer.cornerRadius = 5;
+    self.translucentInfoContainer.clipsToBounds = YES;
 
-#pragma mark UINavigationBar-based actions
+    self.imageView.file = [self.post objectForKey:kPostImageKey];
+    [self.imageView loadInBackground];
 
--(void)cancel:(id)sender
-{
-  [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-}
+    self.titleLabel.text = [self.post objectForKey:kPostTitleKey];
 
-- (void)contact:(id)sender
-{
-  if ([[self.post objectForKey:kPostTakenKey] boolValue])
-    return;
-  
-  if ([[self.post objectForKey:kPostUserKey] isCurrentUser]) {
-    
-    [self.post setObject:@(YES) forKey:kPostTakenKey];
-    [self setContactButtonStyle];
-
-    [self.post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-      if (succeeded) {
-        NSLog(@"Taken set for post %@", [self.post objectForKey:kPostTitleKey]);
-        dispatch_async(dispatch_get_main_queue(), ^{
-          [[NSNotificationCenter defaultCenter] postNotificationName:kLSPostTakenNotification object:self userInfo:@{kLSPostKey: self.post}];
-          [LSConversationUtils sendTakenPushNotificationForPost:self.post];
-        });
-      } else {
-        [self.post setObject:@(NO) forKey:kPostTakenKey];
-        [self setContactButtonStyle];
-      }
+    [self.seller fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        NSString *postDate = [timeFormatter stringForTimeIntervalFromDate:[NSDate date] toDate:self.post.createdAt];
+        NSString *name = [self.seller objectForKey:kUserDisplayNameKey];
+        self.detailsLabel.text = [NSString stringWithFormat:@"Posted by %@ about %@", name, postDate];
+        [self.detailsLabel setNeedsDisplay];
     }];
 
-    if (self.delegate)
-      [self.delegate postDetailControllerDidMarkAsTaken:self forPost:self.post];
+    self.descriptionView.textContainer.lineFragmentPadding = 0;
+    self.descriptionView.textContainerInset = UIEdgeInsetsZero;
+    NSString *description = [NSString stringWithFormat:@"“%@”", [self.post objectForKey:kPostDescriptionKey]];
+    self.descriptionView.text = description;
+    // Why is this set? http://stackoverflow.com/questions/19113673/uitextview-setting-font-not-working-with-ios-6-on-xcode-5
+    self.descriptionView.selectable = NO;
 
-  } else {
-    if (self.delegate)
-      [self.delegate postDetailControllerDidContact:self forPost:self.post];
-  }
+    self.contactButton.layer.cornerRadius = 5;
+    self.contactButton.clipsToBounds = YES;
+    [self.contactButton addTarget:self action:@selector(p_contact:) forControlEvents:UIControlEventTouchUpInside];
+
+    [self p_setContactButtonStyle];
 }
 
-- (void)setContactButtonStyle
+#pragma mark - UINavigationBar
+
+- (void)p_cancel:(id)sender
+{
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)p_contact:(id)sender
+{
+    if ([self.post isTaken])
+        return;
+
+    if ([[self.post user] isCurrentUser]) {
+
+        [self.post setObject:@(YES) forKey:kPostTakenKey];
+        [self p_setContactButtonStyle];
+
+        [self.post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                NSLog(@"Taken set for post %@", [self.post objectForKey:kPostTitleKey]);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kLSPostTakenNotification object:self userInfo:@{kLSPostKey: self.post}];
+                    [LSConversationUtils sendTakenPushNotificationForPost:self.post];
+                });
+            } else {
+                [self.post setObject:@(NO) forKey:kPostTakenKey];
+                [self p_setContactButtonStyle];
+            }
+        }];
+
+        if (self.delegate)
+            [self.delegate postDetailControllerDidMarkAsTaken:self forPost:self.post];
+
+    } else {
+        if (self.delegate)
+            [self.delegate postDetailControllerDidContact:self forPost:self.post];
+    }
+}
+
+- (void)p_setContactButtonStyle
 {
     NSString *title = nil;
     UIColor *backgroundColor = nil;
@@ -169,14 +153,14 @@ static TTTTimeIntervalFormatter *timeFormatter;
     [self.view setNeedsDisplay];
 }
 
-- (void)postWasTaken:(NSNotification *)note
+- (void)p_postWasTaken:(NSNotification *)note
 {
     if (note.object == self) return;
     
     PFObject *aPost = note.userInfo[kLSPostKey];
     if ([self.post isEqualToPost:aPost]) {
         self.post = aPost;
-        [self setContactButtonStyle];
+        [self p_setContactButtonStyle];
     }
 }
 
