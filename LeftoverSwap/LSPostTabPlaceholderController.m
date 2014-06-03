@@ -96,7 +96,7 @@
 
 -(void)postPhotoControllerDidCancel:(LSPostPhotoViewController *)post
 {
-  [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
+    [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)postPhotoControllerDidFinishPosting:(LSPostPhotoViewController *)post

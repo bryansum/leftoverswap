@@ -55,6 +55,18 @@
   return self;
 }
 
+#pragma mark - UIViewController
+
+// http://stackoverflow.com/questions/22327646/tab-bar-background-is-missing-on-ios-7-1-after-presenting-and-dismissing-a-view
+// Bug on Apple's part, only affects iPhone 4 / iPod Touch 5th gen
+- (void)viewWillAppear:(BOOL)animated
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.tabBar.translucent = NO;
+        self.tabBar.translucent = YES;
+    });
+}
+
 #pragma mark - instance methods
 
 - (void)selectConversations
@@ -98,13 +110,13 @@
 
 -(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)aViewController
 {
-  // Intercept tab event, and trigger its own modal UI instead
-  if ([aViewController isKindOfClass:[LSPostTabPlaceholderController class]]) {
-    UIImagePickerController *cameraPicker = [((LSPostTabPlaceholderController*)aViewController) imagePickerController];
-    [self presentViewController:cameraPicker animated:YES completion:nil];
-    return NO;
-  }
-  return YES;
+    // Intercept tab event, and trigger its own modal UI instead
+    if ([aViewController isKindOfClass:[LSPostTabPlaceholderController class]]) {
+        UIImagePickerController *cameraPicker = [((LSPostTabPlaceholderController*)aViewController) imagePickerController];
+        [self presentViewController:cameraPicker animated:YES completion:nil];
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark - LSNewConversationDelegate
