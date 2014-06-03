@@ -52,8 +52,8 @@ static const NSInteger kResetPasswordAlertView = 20;
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	[self.usernameField becomeFirstResponder];
 	[super viewWillAppear:animated];
+    [self.usernameField becomeFirstResponder];
 }
 
 -  (void)dealloc
