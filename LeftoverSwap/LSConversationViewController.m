@@ -158,7 +158,7 @@
     
 //    [self p_setHeaderView];
     
-    //    [self.tableView reloadData];
+    [self.collectionView reloadData];
     [self scrollToBottomAnimated:NO];
 }
 
@@ -171,8 +171,7 @@
         if (!succeeded)
             return;
         
-// TODO: add play message sent sound
-//        [JSMessageSoundEffect playMessageSentSound];
+        [JSQSystemSoundPlayer jsq_playMessageSentSound];
         [newConversation sendPush];
         
         if (self.conversationDelegate)
@@ -182,7 +181,7 @@
     [self.locallyAddedConversations addObject:newConversation];
     [self.conversations addObject:newConversation];
 //    [self p_setHeaderView];
-//    [self.tableView reloadData];
+    [self.collectionView reloadData];
     [self scrollToBottomAnimated:NO];
 }
 

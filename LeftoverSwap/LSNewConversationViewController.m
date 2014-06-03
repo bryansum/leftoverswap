@@ -11,7 +11,7 @@
 
 @interface LSNewConversationViewController ()
 
-@property (nonatomic) PFObject *post;
+@property (nonatomic, strong) PFObject *post;
 
 @end
 
@@ -21,6 +21,7 @@
 {
     self = [super init];
     if (self) {
+        self.post = post;
 //        LSConversationHeader *header = [[LSConversationHeader alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
 //        header.post = self.post = post;
 //        //    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:header.frame];
