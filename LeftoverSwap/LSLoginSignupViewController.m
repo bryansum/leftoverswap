@@ -63,7 +63,7 @@
     self.signInButton.clipsToBounds = YES;
 
     UIInterpolatingMotionEffect *ri = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"layer.transform.rotation" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
-    ri.minimumRelativeValue = @(M_PI/8);
+    ri.minimumRelativeValue = @(M_PI/4);
     ri.maximumRelativeValue = @(-M_PI/8);
 
 //    UIMotionEffectGroup *group = [UIMotionEffectGroup new];
@@ -94,7 +94,7 @@
 
 - (void)p_didTapWatermelon:(UIGestureRecognizer *)recognizer
 {
-    self.logoView.image = [UIImage imageNamed:self.watermelons[self.watermelonIndex++ % self.watermelons.count]];
+    self.logoView.image = [UIImage imageNamed:self.watermelons[++self.watermelonIndex % self.watermelons.count]];
     [self.view setNeedsDisplay];
 }
 
