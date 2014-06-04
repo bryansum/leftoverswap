@@ -25,7 +25,7 @@
 @property (nonatomic) BOOL mapPannedSinceLocationUpdate;
 @property (nonatomic) NSMutableArray *allPosts;
 
-- (void)queryForAllPostsNearLocation:(CLLocationCoordinate2D)location;
+- (void)p_queryForAllPostsNearLocation:(CLLocationCoordinate2D)location;
 
 // NSNotification callbacks
 - (void)distanceFilterDidChange:(NSNotification *)note;
@@ -36,57 +36,50 @@
 
 @implementation LSMapViewController
 
-@synthesize mapView;
-@synthesize locationController;
-@synthesize mapPannedSinceLocationUpdate;
-@synthesize allPosts;
+#pragma mark - UIViewController
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	if (self) {
-
-    self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Map" image:[UIImage imageNamed:@"TabBarMap.png"] tag:0];
-
+        self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Map" image:[UIImage imageNamed:@"TabBarMap.png"] tag:0];
 		self.allPosts = [[NSMutableArray alloc] initWithCapacity:10];
-    
-    LSAppDelegate *appDelegate = (LSAppDelegate*)[[UIApplication sharedApplication] delegate];
-    self.locationController = appDelegate.locationController;
-    
+
+        LSAppDelegate *appDelegate = (LSAppDelegate*)[[UIApplication sharedApplication] delegate];
+        self.locationController = appDelegate.locationController;
 	}
 	return self;
 }
 
-#pragma mark - View lifecycle
-
 - (void)viewDidLoad
 {
-  [super viewDidLoad];
-	
+    [super viewDidLoad];
+
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(distanceFilterDidChange:) name:kLSFilterDistanceChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationDidChange:) name:kLSLocationChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(postWasCreated:) name:kLSPostCreatedNotification object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(postWasTaken:) name:kLSPostTakenNotification object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogIn:) name:kLSUserLogInNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(postWasTaken:) name:kLSPostTakenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogIn:) name:kLSUserLogInNotification object:nil];
 
-  //FIXME: where is this?
+    //FIXME: where is this?
 	self.mapView.region = MKCoordinateRegionMake(CLLocationCoordinate2DMake(37.332495f, -122.029095f), MKCoordinateSpanMake(0.008516f, 0.021801f));
 	self.mapPannedSinceLocationUpdate = NO;
 
-  self.initialPinsPlaced = NO; // reset this for the next time we show the map.
+    self.initialPinsPlaced = NO; // reset this for the next time we show the map.
 
-  [locationController startUpdatingLocation];
+    [self.locationController startUpdatingLocation];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	[locationController startUpdatingLocation];
-	[super viewWillAppear:animated];
+    [super viewWillAppear:animated];
+
+	[self.locationController startUpdatingLocation];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-	[locationController stopUpdatingLocation];
+	[self.locationController stopUpdatingLocation];
 	[super viewDidDisappear:animated];
 }
 
@@ -98,13 +91,13 @@
 
 - (void)dealloc
 {
-	[locationController stopUpdatingLocation];
-	
+	[self.locationController stopUpdatingLocation];
+
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:kLSFilterDistanceChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:kLSLocationChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:kLSPostCreatedNotification object:nil];
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:kLSPostTakenNotification object:nil];
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:kLSUserLogInNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kLSPostTakenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kLSUserLogInNotification object:nil];
 }
 
 #pragma mark - NSNotificationCenter notification handlers
@@ -112,98 +105,96 @@
 - (void)distanceFilterDidChange:(NSNotification *)note
 {
 	if (!self.mapPannedSinceLocationUpdate) {
-    [self centerMapOnCurrentLocation];
+        [self centerMapAtCurrentLocation];
 	}
 }
 
 - (void)locationDidChange:(NSNotification *)note
 {
 	if (!self.mapPannedSinceLocationUpdate) {
-    [self centerMapOnCurrentLocation];
+        [self centerMapAtCurrentLocation];
 	}
 }
 
 - (void)userDidLogIn:(NSNotification*)notification
 {
-  // The pins may have changed color when switching users
-  for (LSPost *annotation in self.mapView.annotations) {
-    MKAnnotationView *annotationView = [self.mapView viewForAnnotation:annotation];
-    if ([annotationView isKindOfClass:[MKPinAnnotationView class]]) {
-      ((MKPinAnnotationView*)annotationView).pinColor = annotation.pinColor;
+    // The pins may have changed color when switching users
+    for (LSPost *annotation in self.mapView.annotations) {
+        MKAnnotationView *annotationView = [self.mapView viewForAnnotation:annotation];
+        if ([annotationView isKindOfClass:[MKPinAnnotationView class]]) {
+            ((MKPinAnnotationView*)annotationView).pinColor = annotation.pinColor;
+        }
     }
-  }
-//  [self queryForAllPostsNearLocation:locationController.currentLocation.coordinate];
 }
 
 - (void)postWasCreated:(NSNotification *)note
 {
-  NSLog(@"%s", __PRETTY_FUNCTION__);
+    PFObject *post = note.userInfo[kLSPostKey];
+    PFGeoPoint *geoPoint = [post objectForKey:kPostLocationKey];
+    CLLocationCoordinate2D postLocation = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
 
-  PFObject *post = note.userInfo[kLSPostKey];
-  PFGeoPoint *geoPoint = [post objectForKey:kPostLocationKey];
-  CLLocationCoordinate2D postLocation = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
+    [self.mapView setCenterCoordinate:postLocation animated:YES];
 
-  [self.mapView setCenterCoordinate:postLocation animated:YES];
-  //FIXME: change this to update the post without doing another query
-  [self queryForAllPostsNearLocation:postLocation];
+    //FIXME: change this to update the post without doing another query
+    [self p_queryForAllPostsNearLocation:postLocation];
 }
 
 - (void)postWasTaken:(NSNotification *)note
 {
-  PFObject *post = note.userInfo[kLSPostKey];
-  
-  LSPost *toRemove = nil;
-  for (LSPost *annotation in self.allPosts) {
-    if ([[annotation.object objectId] isEqualToString:[post objectId]]) {
-      toRemove = annotation;
-      break;
+    PFObject *post = note.userInfo[kLSPostKey];
+
+    LSPost *toRemove = nil;
+    for (LSPost *annotation in self.allPosts) {
+        if ([[annotation.object objectId] isEqualToString:[post objectId]]) {
+            toRemove = annotation;
+            break;
+        }
     }
-  }
-  if (toRemove) {
-    [self.allPosts removeObject:toRemove];
-    [self.mapView removeAnnotation:toRemove];
-  }
+    if (toRemove) {
+        [self.allPosts removeObject:toRemove];
+        [self.mapView removeAnnotation:toRemove];
+    }
 }
 
-#pragma mark - MKMapViewDelegate methods
+#pragma mark - MKMapViewDelegate
 
 - (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
-	if ([annotation isKindOfClass:[LSPost class]]) {
-    static NSString *pinIdentifier = @"CustomPinAnnotation";    
+	if (![annotation isKindOfClass:[LSPost class]])
+        return nil;
 
-		// Try to dequeue an existing pin view first.
-		MKPinAnnotationView *pinView = (MKPinAnnotationView*)[aMapView dequeueReusableAnnotationViewWithIdentifier:pinIdentifier];
+    static NSString *pinIdentifier = @"CustomPinAnnotation";
 
-		if (!pinView) {
-			// If an existing pin view was not available, create one.
-			pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:pinIdentifier];
-		} else {
-			pinView.annotation = annotation;
-		}
+    // Try to dequeue an existing pin view first.
+    MKPinAnnotationView *pinView = (MKPinAnnotationView*)[aMapView dequeueReusableAnnotationViewWithIdentifier:pinIdentifier];
+
+    if (!pinView) {
+        // If an existing pin view was not available, create one.
+        pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:pinIdentifier];
+    } else {
+        pinView.annotation = annotation;
+    }
+
     [(LSPost*)annotation setupAnnotationView:pinView];
-
-		return pinView;
-	}
-
-	return nil;
+    
+    return pinView;
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
-  if (![[view annotation] isKindOfClass:[LSPost class]])
-    return;
-  
-  // Have the TabBarController present this post view so the contact view => message view transition works as expected.
-  UIViewController *controller = [(LSPost*)view.annotation viewControllerWithDelegate:(LSTabBarController*)self.tabBarController];
-  [self.tabBarController presentViewController:controller animated:YES completion:nil];
+    if (![[view annotation] isKindOfClass:[LSPost class]])
+        return;
+
+    // Have the TabBarController present this post view so the contact view => message view transition works as expected.
+    UIViewController *controller = [(LSPost*)view.annotation viewControllerWithDelegate:(LSTabBarController*)self.tabBarController];
+    [self.tabBarController presentViewController:controller animated:YES completion:nil];
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
 	id<MKAnnotation> annotation = view.annotation;
-  if ([annotation isKindOfClass:[MKUserLocation class]]) {
-    [self centerMapOnCurrentLocation];
+    if ([annotation isKindOfClass:[MKUserLocation class]]) {
+        [self centerMapAtCurrentLocation];
 	}
 }
 
@@ -214,14 +205,26 @@
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
-  // FIXME: We should be smarter about only re-querying when the bounds from the previous
-  // query have been exceeded.
-	[self queryForAllPostsNearLocation:self.mapView.centerCoordinate];
+    // FIXME: We should be smarter about only re-querying when the bounds from the previous
+    // query have been exceeded.
+	[self p_queryForAllPostsNearLocation:self.mapView.centerCoordinate];
 }
 
 #pragma mark - Fetch map pins
 
-- (void)queryForAllPostsNearLocation:(CLLocationCoordinate2D)location
+- (void)centerMapAtCurrentLocation
+{
+    CLLocation *currentLocation = self.locationController.currentLocation;
+    CLLocationAccuracy filterDistance = self.locationController.filterDistance;
+
+    // Center the map on the user's current location:
+    MKCoordinateRegion newRegion = MKCoordinateRegionMakeWithDistance(currentLocation.coordinate, filterDistance * 2, filterDistance * 2);
+
+    [self.mapView setRegion:newRegion animated:YES];
+    self.mapPannedSinceLocationUpdate = NO;
+}
+
+- (void)p_queryForAllPostsNearLocation:(CLLocationCoordinate2D)location
 {
     // FIXME: 20 posts is probably not reasonable
     static NSUInteger const kPostLimit = 20;
@@ -261,7 +264,7 @@
             LSPost *newPost = [[LSPost alloc] initWithPFObject:object];
             [allNewPosts addObject:newPost];
             BOOL found = NO;
-            for (LSPost *currentPost in allPosts) {
+            for (LSPost *currentPost in self.allPosts) {
                 if ([newPost equalToPost:currentPost]) {
                     found = YES;
                 }
@@ -274,7 +277,7 @@
         
         // 2. Find posts in allPosts that didn't make the cut.
         NSMutableArray *postsToRemove = [[NSMutableArray alloc] initWithCapacity:kPostLimit];
-        for (LSPost *currentPost in allPosts) {
+        for (LSPost *currentPost in self.allPosts) {
             BOOL found = NO;
             // Use our object cache from the first loop to save some work.
             for (LSPost *allNewPost in allNewPosts) {
@@ -300,25 +303,12 @@
         // At this point, newAllPosts contains a new list of post objects.
         // We should add everything in newPosts to the map, remove everything in postsToRemove,
         // and add newPosts to allPosts.
-        [mapView removeAnnotations:postsToRemove];
-        [mapView addAnnotations:newPosts];
-        [allPosts addObjectsFromArray:newPosts];
-        [allPosts removeObjectsInArray:postsToRemove];
+        [self.mapView removeAnnotations:postsToRemove];
+        [self.mapView addAnnotations:newPosts];
+        [self.allPosts addObjectsFromArray:newPosts];
+        [self.allPosts removeObjectsInArray:postsToRemove];
 	}];
 }
 
-#pragma mark - Center on current location
-
-- (void)centerMapOnCurrentLocation
-{
-  CLLocation *currentLocation = locationController.currentLocation;
-  CLLocationAccuracy filterDistance = locationController.filterDistance;
-  
-  // Center the map on the user's current location:
-  MKCoordinateRegion newRegion = MKCoordinateRegionMakeWithDistance(currentLocation.coordinate, filterDistance * 2, filterDistance * 2);
-  
-  [self.mapView setRegion:newRegion animated:YES];
-  self.mapPannedSinceLocationUpdate = NO;
-}
 
 @end

@@ -116,6 +116,11 @@
         UIImagePickerController *cameraPicker = [((LSPostTabPlaceholderController*)aViewController) imagePickerController];
         [self presentViewController:cameraPicker animated:YES completion:nil];
         return NO;
+    } else if ([aViewController isKindOfClass:[LSMapViewController class]]
+               && self.selectedViewController == self.mapViewController) {
+        // When we tap on the controller when we're already in this view, center the map.
+        [self.mapViewController centerMapAtCurrentLocation];
+        return NO;
     }
     return YES;
 }
