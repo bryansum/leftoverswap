@@ -67,7 +67,7 @@ static TTTTimeIntervalFormatter *timeFormatter;
       self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(228, 6, 83, 14)];
       [self.timeLabel setFont:[UIFont systemFontOfSize:12]];
       [self.timeLabel setTextAlignment:NSTextAlignmentRight];
-      [self.timeLabel setTextColor:[UIColor colorWithRed:0.000 green:0.502 blue:1.000 alpha:1.000]];
+      [self.timeLabel setTextColor:kLSGreenColor];
       [self.timeLabel setBackgroundColor:[UIColor clearColor]];
       [self.mainView addSubview:self.timeLabel];
       

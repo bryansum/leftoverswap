@@ -8,6 +8,7 @@
 
 #pragma mark - Application constants
 extern NSTimeInterval const kLSTimeToExpiration; // 2 weeks
+extern UIColor *const kLSGreenColor;
 
 #pragma mark - PFObject User Class
 // Field keys

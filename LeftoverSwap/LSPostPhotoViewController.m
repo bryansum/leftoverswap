@@ -12,7 +12,7 @@
 #import "LSLocationController.h"
 #import "LSConstants.h"
 #import "LSPostPhotoViewController.h"
-#import "LSPaddedTextField.h"
+
 #import "UIImage+Resize.h"
 #import "UIImage+FixRotation.h"
 
@@ -54,6 +54,10 @@ static NSString *const kLSDescriptionPlaceholderText = @"Anything else to add?";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    // This is a simple way to make the status bar white.
+    // http://stackoverflow.com/questions/19022210/preferredstatusbarstyle-isnt-called
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
 
     self.translucentInfoContainer.layer.cornerRadius = 5;
     self.translucentInfoContainer.clipsToBounds = YES;

@@ -10,6 +10,7 @@
 
 #pragma mark - Application constants
 NSTimeInterval const kLSTimeToExpiration = 2 * 7 * (60 * 60 * 24); // 2 weeks
+UIColor *const kLSGreenColor = [UIColor colorWithRed:(40./255) green:(198./255) blue:(23./255) alpha:1];
 
 #pragma mark - PFObject User Class
 // Field keys

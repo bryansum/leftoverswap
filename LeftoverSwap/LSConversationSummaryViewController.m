@@ -51,7 +51,14 @@
     return self;
 }
 
-#pragma mark - UIView
+#pragma mark - UIViewController
+
+-(void)viewDidLoad
+{
+    // This is a simple way to make the status bar white.
+    // http://stackoverflow.com/questions/19022210/preferredstatusbarstyle-isnt-called
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {

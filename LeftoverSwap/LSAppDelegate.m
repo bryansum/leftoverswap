@@ -64,7 +64,8 @@ static NSString *const kLastTimeOpenedKey = @"lastTimeOpened";
 
   [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound];
 
-  self.window.tintColor = [UIColor colorWithRed:(40./255) green:(198./255) blue:(23./255) alpha:1];
+//    self.window.tintColor = [UIColor whiteColor];
+  self.window.tintColor = kLSGreenColor;
   [self.window makeKeyAndVisible];
 
   if (![PFUser currentUser]) {
@@ -97,7 +98,10 @@ static NSString *const kLastTimeOpenedKey = @"lastTimeOpened";
 - (void)setupAppearance {  
   // set the global navigation bar tint
 
-  [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:0.411 green:0.858 blue:0.509 alpha:1.000]];
+    UINavigationBar *appearance = [UINavigationBar appearance];
+    appearance.tintColor = [UIColor whiteColor];
+    appearance.barTintColor = [UIColor colorWithRed:(40./255) green:(198./255) blue:(23./255) alpha:1];
+//  [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:0.411 green:0.858 blue:0.509 alpha:1.000]];
 //  [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor, [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset, nil]];
 }
 

@@ -34,7 +34,7 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S8p-AW-2Hv">
                     <rect key="frame" x="45" y="283" width="231" height="80"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.15686274510000001" green="0.77647058820000003" blue="0.090196078430000007" alpha="1" colorSpace="deviceRGB"/>
+                    <color key="backgroundColor" white="1" alpha="0.25" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="80" id="bYp-k8-8KG"/>
                     </constraints>
@@ -49,7 +49,7 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I0V-Bf-81h">
                     <rect key="frame" x="45" y="383" width="231" height="80"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.15686274510000001" green="0.77647058820000003" blue="0.090196078430000007" alpha="1" colorSpace="deviceRGB"/>
+                    <color key="backgroundColor" white="1" alpha="0.25" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="80" id="30c-zI-xY9"/>
                     </constraints>
@@ -62,7 +62,7 @@
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.15686274510000001" green="0.77647058820000003" blue="0.090196078430000007" alpha="1" colorSpace="deviceRGB"/>
             <constraints>
                 <constraint firstItem="a7I-I0-32f" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="1Qg-46-6ZD"/>
                 <constraint firstItem="zqI-P6-P7L" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="180" id="N14-GT-IXL"/>

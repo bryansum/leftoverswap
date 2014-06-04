@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0805F28917A7940300963343 /* LSPostPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0805F28817A7940300963343 /* LSPostPhotoViewController.m */; };
-		0823B42817A0A4DE00FE86FF /* LSConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0823B42717A0A4DE00FE86FF /* LSConstants.m */; };
+		0823B42817A0A4DE00FE86FF /* LSConstants.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0823B42717A0A4DE00FE86FF /* LSConstants.mm */; };
 		083D474017DD2C670081FE4B /* LSNewConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 083D473F17DD2C670081FE4B /* LSNewConversationViewController.m */; };
 		083D474317DD31CA0081FE4B /* LSConversationHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 083D474217DD31CA0081FE4B /* LSConversationHeader.m */; };
 		083D474817DF964C0081FE4B /* PFObject+Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 083D474717DF964C0081FE4B /* PFObject+Conversation.m */; };
@@ -46,7 +46,6 @@
 		08F455A4179F7C8200CB7E2D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F455A3179F7C8200CB7E2D /* main.m */; };
 		08F455A8179F7C8200CB7E2D /* LSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F455A7179F7C8200CB7E2D /* LSAppDelegate.m */; };
 		08F455C1179F7CEE00CB7E2D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F455C0179F7CEE00CB7E2D /* CoreLocation.framework */; };
-		08F8DCC417AF7E6300A6AE60 /* LSPaddedTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F8DCC317AF7E6300A6AE60 /* LSPaddedTextField.m */; };
 		5D44DF9817B967EF000E0B9C /* TabBarMe@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D44DF9017B967EF000E0B9C /* TabBarMe@2x.png */; };
 		5D44DF9917B967EF000E0B9C /* TabBarMe.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D44DF9117B967EF000E0B9C /* TabBarMe.png */; };
 		5D44DF9A17B967EF000E0B9C /* TabBarPost@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D44DF9217B967EF000E0B9C /* TabBarPost@2x.png */; };
@@ -80,7 +79,7 @@
 		0805F28717A7940300963343 /* LSPostPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSPostPhotoViewController.h; sourceTree = "<group>"; };
 		0805F28817A7940300963343 /* LSPostPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSPostPhotoViewController.m; sourceTree = "<group>"; };
 		0823B42617A0A4DE00FE86FF /* LSConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSConstants.h; sourceTree = "<group>"; };
-		0823B42717A0A4DE00FE86FF /* LSConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSConstants.m; sourceTree = "<group>"; };
+		0823B42717A0A4DE00FE86FF /* LSConstants.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LSConstants.mm; sourceTree = "<group>"; };
 		083D473E17DD2C670081FE4B /* LSNewConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSNewConversationViewController.h; sourceTree = "<group>"; };
 		083D473F17DD2C670081FE4B /* LSNewConversationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSNewConversationViewController.m; sourceTree = "<group>"; };
 		083D474117DD31CA0081FE4B /* LSConversationHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSConversationHeader.h; sourceTree = "<group>"; };
@@ -142,8 +141,6 @@
 		08F455A6179F7C8200CB7E2D /* LSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LSAppDelegate.h; sourceTree = "<group>"; };
 		08F455A7179F7C8200CB7E2D /* LSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LSAppDelegate.m; sourceTree = "<group>"; };
 		08F455C0179F7CEE00CB7E2D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		08F8DCC217AF7E6300A6AE60 /* LSPaddedTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSPaddedTextField.h; sourceTree = "<group>"; };
-		08F8DCC317AF7E6300A6AE60 /* LSPaddedTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSPaddedTextField.m; sourceTree = "<group>"; };
 		5791DAB6E6E14ECEBFCFF931 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		5D44DF9017B967EF000E0B9C /* TabBarMe@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TabBarMe@2x.png"; sourceTree = "<group>"; };
 		5D44DF9117B967EF000E0B9C /* TabBarMe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TabBarMe.png; sourceTree = "<group>"; };
@@ -210,8 +207,6 @@
 				08AB64F517BEDC1000EF8D0D /* Conversation */,
 				08EB0F5617B3024C00C5E4FF /* LSActivityView.h */,
 				08EB0F5717B3024C00C5E4FF /* LSActivityView.m */,
-				08F8DCC217AF7E6300A6AE60 /* LSPaddedTextField.h */,
-				08F8DCC317AF7E6300A6AE60 /* LSPaddedTextField.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -397,7 +392,7 @@
 				0823B42F17A0B12600FE86FF /* Controllers */,
 				08F4559E179F7C8200CB7E2D /* Supporting Files */,
 				0823B42617A0A4DE00FE86FF /* LSConstants.h */,
-				0823B42717A0A4DE00FE86FF /* LSConstants.m */,
+				0823B42717A0A4DE00FE86FF /* LSConstants.mm */,
 			);
 			path = LeftoverSwap;
 			sourceTree = "<group>";
@@ -561,9 +556,8 @@
 			files = (
 				08F455A4179F7C8200CB7E2D /* main.m in Sources */,
 				08F455A8179F7C8200CB7E2D /* LSAppDelegate.m in Sources */,
-				0823B42817A0A4DE00FE86FF /* LSConstants.m in Sources */,
+				0823B42817A0A4DE00FE86FF /* LSConstants.mm in Sources */,
 				0805F28917A7940300963343 /* LSPostPhotoViewController.m in Sources */,
-				08F8DCC417AF7E6300A6AE60 /* LSPaddedTextField.m in Sources */,
 				08EB0F5017B300D600C5E4FF /* LSSignupViewController.m in Sources */,
 				08EB0F5117B300D600C5E4FF /* LSLoginViewController.m in Sources */,
 				08EB0F5817B3024C00C5E4FF /* LSActivityView.m in Sources */,

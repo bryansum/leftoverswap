@@ -67,6 +67,10 @@ static TTTTimeIntervalFormatter *timeFormatter;
 
 //    NSInteger adjustBottom = 548 - self.view.bounds.size.height;
 
+    // This is a simple way to make the status bar white.
+    // http://stackoverflow.com/questions/19022210/preferredstatusbarstyle-isnt-called
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+
     self.translucentInfoContainer.layer.cornerRadius = 5;
     self.translucentInfoContainer.clipsToBounds = YES;
 
@@ -168,7 +172,7 @@ static TTTTimeIntervalFormatter *timeFormatter;
         backgroundColor = [UIColor colorWithRed:0.900 green:0.247 blue:0.294 alpha:1.000];
     } else {
         title = @"contact";
-        backgroundColor = [UIColor colorWithRed:0.357 green:0.844 blue:0.435 alpha:1.000];
+        backgroundColor = kLSGreenColor;
     }
     [self.contactButton setTitle:title forState:UIControlStateNormal];
     self.contactButton.backgroundColor = backgroundColor;

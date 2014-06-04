@@ -47,6 +47,10 @@ static const NSInteger kResetPasswordAlertView = 20;
     self.resetPasswordButton.layer.cornerRadius = 5;
     self.resetPasswordButton.clipsToBounds = YES;
 
+    // This is a simple way to make the status bar white.
+    // http://stackoverflow.com/questions/19022210/preferredstatusbarstyle-isnt-called
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+
 	self.doneButton.enabled = NO;
 }
 

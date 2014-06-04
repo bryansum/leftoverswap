@@ -46,21 +46,24 @@
 
 - (void)viewDidLoad
 {
-  [super viewDidLoad];
+    [super viewDidLoad];
 
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(postCreated:) name:kLSPostCreatedNotification object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(postTaken:) name:kLSPostTakenNotification object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogIn:) name:kLSUserLogInNotification object:nil];
-  
-  self.navigationItem.title = [[PFUser currentUser] objectForKey:kUserDisplayNameKey];
-  
-  self.navigationItem.leftBarButtonItem = nil;
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Feedback" style:UIBarButtonItemStyleBordered target:self action:@selector(submitFeedback:)];
-  
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Log out" style:UIBarButtonItemStyleDone target:self action:@selector(logout:)];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(postCreated:) name:kLSPostCreatedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(postTaken:) name:kLSPostTakenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogIn:) name:kLSUserLogInNotification object:nil];
 
-  
-  [self loadPosts];
+    self.navigationItem.title = [[PFUser currentUser] objectForKey:kUserDisplayNameKey];
+
+    self.navigationItem.leftBarButtonItem = nil;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Feedback" style:UIBarButtonItemStyleBordered target:self action:@selector(submitFeedback:)];
+
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Log out" style:UIBarButtonItemStyleDone target:self action:@selector(logout:)];
+
+    // This is a simple way to make the status bar white.
+    // http://stackoverflow.com/questions/19022210/preferredstatusbarstyle-isnt-called
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    
+    [self loadPosts];
 }
 
 - (void)loadPosts

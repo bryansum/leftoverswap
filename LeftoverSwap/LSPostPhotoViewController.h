@@ -6,8 +6,6 @@
 //  Copyright (c) 2013 LeftoverSwap. All rights reserved.
 //
 
-@class LSPaddedTextField;
-
 @class LSPostPhotoViewController;
 
 @protocol LSPostPhotoViewControllerDelegate <NSObject>
