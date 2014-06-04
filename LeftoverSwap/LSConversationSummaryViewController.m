@@ -163,7 +163,7 @@
     PFQuery *query = [self p_queryForTable];
     query.cachePolicy = kPFCachePolicyNetworkElseCache;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (error)
+        if (error || ![PFUser currentUser])
             return;
         
         self.objects = objects;
@@ -187,7 +187,7 @@
         [query whereKey:@"createdAt" greaterThan:[self.objects[0] createdAt]];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *newConversations, NSError *error) {
-        if (error)
+        if (error || ![PFUser currentUser])
             return;
         
         NSArray *oldConversations = self.objects;

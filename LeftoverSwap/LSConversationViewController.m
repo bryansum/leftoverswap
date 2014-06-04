@@ -168,7 +168,7 @@
     [newConversation setObject:post forKey:kConversationPostKey];
     
     [newConversation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!succeeded)
+        if (!succeeded || ![PFUser currentUser])
             return;
         
         [JSQSystemSoundPlayer jsq_playMessageSentSound];
@@ -205,7 +205,7 @@
     [newConversation setObject:[self p_latestPost] forKey:kConversationPostKey];
     
     [newConversation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!succeeded)
+        if (!succeeded || ![PFUser currentUser])
             return;
         
         [newConversation sendPush];
