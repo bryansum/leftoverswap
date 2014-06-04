@@ -75,7 +75,7 @@
   self.selectedViewController = self.conversationNavigationController;
 }
 
--(void)presentSignInView:(BOOL)animated
+-(void)presentSignInViewAnimated:(BOOL)animated
 {
   LSLoginSignupViewController *signInViewController = [[LSLoginSignupViewController alloc] initWithNibName:nil bundle:nil];
   signInViewController.delegate = self;

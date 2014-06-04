@@ -18,6 +18,6 @@
 @property (nonatomic, readonly) LSMapViewController *mapViewController;
 
 - (void)selectConversations;
-- (void)presentSignInView:(BOOL)animated;
+- (void)presentSignInViewAnimated:(BOOL)animated;
 
 @end

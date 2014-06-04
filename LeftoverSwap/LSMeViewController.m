@@ -152,7 +152,7 @@
   [[PFInstallation currentInstallation] removeObjectForKey:kLSInstallationChannelsKey];
   [[PFInstallation currentInstallation] saveEventually];
   [PFUser logOut];
-  [(LSTabBarController*)self.tabBarController presentSignInView:YES];
+  [(LSTabBarController*)self.tabBarController presentSignInViewAnimated:YES];
 }
 
 - (void)submitFeedback:(id)sender

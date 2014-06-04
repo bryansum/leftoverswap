@@ -20,138 +20,82 @@
 #import "LSSignupViewController.h"
 
 @interface LSLoginSignupViewController ()
-@property (nonatomic, strong) UIImageView *logoView;
-@property (nonatomic, strong) NSArray *watermelons;
-@property int arrayIndex;
-@property UIStoryboard *loginSignupStoryboard;
+
+@property (weak, nonatomic) IBOutlet UIImageView *logoView;
+@property (weak, nonatomic) IBOutlet UIButton *logInButton;
+@property (weak, nonatomic) IBOutlet UIButton *signInButton;
+
+@property (strong, nonatomic) UIStoryboard *loginSignupStoryboard;
+
+@property (strong, nonatomic) NSArray *watermelons;
+@property (assign, nonatomic) NSUInteger watermelonIndex;
+
+- (void)p_didTapWatermelon:(UIGestureRecognizer *)recognizer;
 
 @end
 
 @implementation LSLoginSignupViewController
 
+#pragma mark - UIViewController
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.watermelonIndex = 0;
+        self.watermelons = @[@"plain.png", @"plain2.png", @"plain3.png", @"plain4.png"];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     self.loginSignupStoryboard = [UIStoryboard storyboardWithName:@"LoginSignup" bundle:nil];
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"greenblock"]];
-    
-    NSInteger screenWidth = [UIScreen mainScreen].bounds.size.width;
-    
-    {
-        NSString *text = @"LeftoverSwap";
-        NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Medium" size:36.0f]};
-        CGSize textSize = [text sizeWithAttributes:attributes];
-        UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake((screenWidth - textSize.width)/2.0f, 180.0f, textSize.width, textSize.height)];
-        [textLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:36.0f]];
-        [textLabel setText:text];
-        [textLabel setTextColor:[UIColor blackColor]];
-        [textLabel setBackgroundColor:[UIColor clearColor]];
-        [textLabel setTextAlignment:NSTextAlignmentCenter];
-        
-        [self.view addSubview:textLabel];
-        
-        self.watermelons = [[NSArray alloc] initWithObjects: @"plain2.png", @"plain3.png", @"plain4.png", @"plain.png", nil];
-        self.arrayIndex = 3;
-        self.logoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[self.watermelons objectAtIndex:self.arrayIndex]]];
-        CGRect logoFrame = CGRectMake((screenWidth/4.0f), 0.0f, (screenWidth/2.0f), 230.0f);
-        [self.logoView setFrame:logoFrame];
-        [self.logoView setContentMode:UIViewContentModeScaleAspectFit];
-        [self.logoView setUserInteractionEnabled:YES];
-        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageTapped:)];
-        singleTap.numberOfTapsRequired = 1;
-        singleTap.numberOfTouchesRequired = 1;
-        [self.logoView addGestureRecognizer:singleTap];
-        [self.view addSubview:self.logoView];
-    }
-    {
-        NSString *text = @"log in";
-        CGSize dimens = CGSizeMake(240, 80);
-        
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setFrame:CGRectMake((screenWidth - dimens.width)/2.0f, 260.0f, dimens.width, dimens.height)];
-        [button setTitle:text forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [[button titleLabel] setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:28.0f]];
-        [button setTitleEdgeInsets:UIEdgeInsetsMake( 0.0f, 5.0f, 0.0f, 0.0f)];
-        [button addTarget:self action:@selector(loginButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
-        [button setBackgroundColor:[UIColor colorWithRed:(19.0/255.0f) green:(128.0/255.0f) blue:(8.0/255.0f) alpha:1.0f]];
-        
-        [self.view addSubview:button];
-    }
-    {
-        NSString *text = @"sign up";
-        CGSize dimens = CGSizeMake(240, 80);
-        
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setFrame:CGRectMake((screenWidth - dimens.width)/2.0f, 360.0f, dimens.width, dimens.height)];
-        [button setTitle:text forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [[button titleLabel] setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:28.0f]];
-        [button setTitleEdgeInsets:UIEdgeInsetsMake( 0.0f, 5.0f, 0.0f, 0.0f)];
-        [button addTarget:self action:@selector(signUpSelected:) forControlEvents:UIControlEventTouchUpInside];
-        [button setBackgroundColor:[UIColor colorWithRed:(19.0/255.0f) green:(128.0/255.0f) blue:(8.0/255.0f) alpha:1.0f]];
-        
-        [self.view addSubview:button];
-    }
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(p_didTapWatermelon:)];
+    singleTap.numberOfTapsRequired = 1;
+    singleTap.numberOfTouchesRequired = 1;
+    [self.logoView addGestureRecognizer:singleTap];
+
+    self.logInButton.layer.cornerRadius = 5;
+    self.logInButton.clipsToBounds = YES;
+
+    self.signInButton.layer.cornerRadius = 5;
+    self.signInButton.clipsToBounds = YES;
+
+    UIInterpolatingMotionEffect *ri = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"layer.transform.rotation" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+    ri.minimumRelativeValue = @(M_PI/8);
+    ri.maximumRelativeValue = @(-M_PI/8);
+
+//    UIMotionEffectGroup *group = [UIMotionEffectGroup new];
+//    group.motionEffects = @[rxi, ryi];
+
+    [self.logoView addMotionEffect:ri];
 }
 
 #pragma mark - Transition methods
 
 - (IBAction)loginButtonSelected:(id)sender
 {
-  UINavigationController *navController = (UINavigationController*)[self.loginSignupStoryboard instantiateViewControllerWithIdentifier:@"loginViewController"];
-  LSLoginViewController *loginViewController = (LSLoginViewController*)navController.topViewController;
-  loginViewController.delegate = self.delegate;
-  navController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    UINavigationController *navController = (UINavigationController*)[self.loginSignupStoryboard instantiateViewControllerWithIdentifier:@"loginViewController"];
+    LSLoginViewController *loginViewController = (LSLoginViewController*)navController.topViewController;
+    loginViewController.delegate = self.delegate;
+    navController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
 	[self presentViewController:navController animated:YES completion:nil];
 }
 
 - (IBAction)signUpSelected:(id)sender
 {
-  UINavigationController *navController = (UINavigationController*)[self.loginSignupStoryboard  instantiateViewControllerWithIdentifier:@"signupViewController"];
-  LSSignupViewController *signupViewController = (LSSignupViewController*)navController.topViewController;
-  signupViewController.delegate = self.delegate;
-  navController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    UINavigationController *navController = (UINavigationController*)[self.loginSignupStoryboard  instantiateViewControllerWithIdentifier:@"signupViewController"];
+    LSSignupViewController *signupViewController = (LSSignupViewController*)navController.topViewController;
+    signupViewController.delegate = self.delegate;
+    navController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
 	[self presentViewController:navController animated:YES completion:nil];
 }
 
-- (void)imageTapped:(UIGestureRecognizer *)recognizer
+- (void)p_didTapWatermelon:(UIGestureRecognizer *)recognizer
 {
-  NSLog(@"tapped");
-  NSInteger screenWidth = [UIScreen mainScreen].bounds.size.width;
-  self.logoView.image = nil;
-  if (self.arrayIndex == 3) {
-    self.arrayIndex = 0;
-    self.logoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[self.watermelons objectAtIndex:self.arrayIndex]]];
-    NSLog(@"%i", self.arrayIndex);
-    CGRect logoFrame = CGRectMake((screenWidth/4.0f), 0.0f, (screenWidth/2.0f), 230.0f);
-    [self.logoView setFrame:logoFrame];
-    [self.logoView setContentMode:UIViewContentModeScaleAspectFit];
-    [self.view addSubview:self.logoView];
-  } else if (self.arrayIndex == 0) {
-    self.arrayIndex = 1;
-    self.logoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[self.watermelons objectAtIndex:self.arrayIndex]]];
-    NSLog(@"%i", self.arrayIndex);
-    CGRect logoFrame = CGRectMake((screenWidth/4.0f), 0.0f, (screenWidth/2.0f), 230.0f);
-    [self.logoView setFrame:logoFrame];
-    [self.logoView setContentMode:UIViewContentModeScaleAspectFit];
-    [self.view addSubview:self.logoView];
-  } else if (self.arrayIndex == 1) {
-    self.arrayIndex = 2;
-    self.logoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[self.watermelons objectAtIndex:self.arrayIndex]]];
-    NSLog(@"%i", self.arrayIndex);
-    CGRect logoFrame = CGRectMake((screenWidth/4.0f), 0.0f, (screenWidth/2.0f), 230.0f);
-    [self.logoView setFrame:logoFrame];
-    [self.logoView setContentMode:UIViewContentModeScaleAspectFit];
-    [self.view addSubview:self.logoView];
-  } else if (self.arrayIndex == 2) {
-    self.arrayIndex = 3;
-    self.logoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[self.watermelons objectAtIndex:self.arrayIndex]]];
-    NSLog(@"%i", self.arrayIndex);
-    CGRect logoFrame = CGRectMake((screenWidth/4.0f), 0.0f, (screenWidth/2.0f), 230.0f);
-    [self.logoView setFrame:logoFrame];
-    [self.logoView setContentMode:UIViewContentModeScaleAspectFit];
-    [self.view addSubview:self.logoView];
-  };
+    self.logoView.image = [UIImage imageNamed:self.watermelons[self.watermelonIndex++ % self.watermelons.count]];
+    [self.view setNeedsDisplay];
 }
 
 @end

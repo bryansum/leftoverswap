@@ -68,7 +68,7 @@ static NSString *const kLastTimeOpenedKey = @"lastTimeOpened";
   [self.window makeKeyAndVisible];
 
   if (![PFUser currentUser]) {
-    [self.tabBarController presentSignInView:NO];
+    [self.tabBarController presentSignInViewAnimated:NO];
   }
   
   return YES;
