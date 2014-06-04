@@ -50,7 +50,7 @@ static TTTTimeIntervalFormatter *timeFormatter;
             timeFormatter = [[TTTTimeIntervalFormatter alloc] init];
         }
 
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(p_cancel:)];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(p_cancel:)];
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(p_postWasTaken:) name:kLSPostTakenNotification object:nil];
     }
