@@ -72,6 +72,11 @@
     [self.logoView addMotionEffect:ri];
 }
 
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
+
 #pragma mark - Transition methods
 
 - (IBAction)loginButtonSelected:(id)sender
