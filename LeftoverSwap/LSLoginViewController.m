@@ -44,6 +44,12 @@ static const NSInteger kResetPasswordAlertView = 20;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textInputChanged:) name:UITextFieldTextDidChangeNotification object:self.usernameField];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textInputChanged:) name:UITextFieldTextDidChangeNotification object:self.passwordField];
 
+    for (UIView *view in @[self.usernameField, self.passwordField]) {
+        view.tintColor = [UIColor whiteColor];
+        view.layer.cornerRadius = 3;
+        view.clipsToBounds = YES;
+    }
+
     self.resetPasswordButton.layer.cornerRadius = 5;
     self.resetPasswordButton.clipsToBounds = YES;
 

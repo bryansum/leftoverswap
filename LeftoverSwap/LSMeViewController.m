@@ -160,10 +160,12 @@
 
 - (void)submitFeedback:(id)sender
 {
-  BITFeedbackManager *feedbackManager = [[BITHockeyManager sharedHockeyManager] feedbackManager];
-  BITFeedbackListViewController *listController = [feedbackManager feedbackListViewController:YES];
-  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:listController];
-  [self presentViewController:navController animated:YES completion:nil];
+    BITFeedbackManager *feedbackManager = [[BITHockeyManager sharedHockeyManager] feedbackManager];
+    BITFeedbackListViewController *listController = [feedbackManager feedbackListViewController:YES];
+
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:listController];
+    navController.navigationBar.barStyle = UIBarStyleBlack;
+    [self presentViewController:navController animated:YES completion:nil];
 }
 
 @end

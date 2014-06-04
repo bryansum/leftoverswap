@@ -59,6 +59,12 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textInputChanged:) name:UITextFieldTextDidChangeNotification object:self.passwordField];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textInputChanged:) name:UITextFieldTextDidChangeNotification object:self.emailField];
 
+    for (UIView *view in @[self.usernameField, self.passwordField, self.emailField]) {
+        view.tintColor = [UIColor whiteColor];
+        view.layer.cornerRadius = 3;
+        view.clipsToBounds = YES;
+    }
+
     // This is a simple way to make the status bar white.
     // http://stackoverflow.com/questions/19022210/preferredstatusbarstyle-isnt-called
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
