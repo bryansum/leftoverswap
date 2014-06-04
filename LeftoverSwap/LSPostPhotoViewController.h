@@ -19,14 +19,7 @@
 
 @interface LSPostPhotoViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate>
 
-@property (nonatomic) UIImage *image;
-@property (nonatomic) IBOutlet UIImageView *imageView;
-@property (nonatomic) IBOutlet LSPaddedTextField *titleTextField;
-@property (nonatomic) IBOutlet UITextView *descriptionTextView;
-@property (nonatomic) IBOutlet UIBarButtonItem *postButton;
-@property (nonatomic, weak) id<LSPostPhotoViewControllerDelegate> delegate;
-
-- (IBAction)cancelPost:(id)sender;
-- (IBAction)postPost:(id)sender;
+@property (strong, nonatomic) UIImage *image;
+@property (weak, nonatomic) id<LSPostPhotoViewControllerDelegate> delegate;
 
 @end

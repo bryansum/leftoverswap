@@ -14,7 +14,7 @@
 
 @interface LSPostTabPlaceholderController ()
 
-@property (nonatomic) UIImagePickerController *imagePickerController;
+@property (nonatomic, strong) UIImagePickerController *imagePickerController;
 
 @end
 

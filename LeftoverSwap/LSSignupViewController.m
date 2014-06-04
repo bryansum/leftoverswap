@@ -22,11 +22,11 @@
 
 @interface LSSignupViewController ()
 
-@property (nonatomic, strong) IBOutlet UITextField *usernameField;
-@property (nonatomic, strong) IBOutlet UITextField *passwordField;
-@property (nonatomic, strong) IBOutlet UITextField *emailField;
+@property (strong, nonatomic) IBOutlet UITextField *usernameField;
+@property (strong, nonatomic) IBOutlet UITextField *passwordField;
+@property (strong, nonatomic) IBOutlet UITextField *emailField;
 
-@property (nonatomic, strong) IBOutlet UIBarButtonItem *doneButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *doneButton;
 
 - (IBAction)cancel:(id)sender;
 - (IBAction)done:(id)sender;

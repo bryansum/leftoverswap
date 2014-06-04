@@ -20,15 +20,27 @@
 
 @property PFFile *photoFile;
 @property PFFile *thumbnailFile;
-@property (nonatomic, assign) UIBackgroundTaskIdentifier fileUploadBackgroundTaskId;
-@property (nonatomic, assign) UIBackgroundTaskIdentifier photoPostBackgroundTaskId;
+
+@property (weak, nonatomic) IBOutlet UIView *translucentInfoContainer;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UITextField *titleTextField;
+@property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *postButton;
+
+@property (assign, nonatomic) UIBackgroundTaskIdentifier fileUploadBackgroundTaskId;
+@property (assign, nonatomic) UIBackgroundTaskIdentifier photoPostBackgroundTaskId;
 
 - (UIView*)p_findUnfilledTextView;
 - (PFGeoPoint*)p_currentLocation;
 
+- (IBAction)cancelPost:(id)sender;
+- (IBAction)postPost:(id)sender;
+
 @end
 
 @implementation LSPostPhotoViewController
+
+static NSString *const kLSDescriptionPlaceholderText = @"Anything else to add?";
 
 #pragma mark - NSObject
 
@@ -43,25 +55,33 @@
 {
     [super viewDidLoad];
 
+    self.translucentInfoContainer.layer.cornerRadius = 5;
+    self.translucentInfoContainer.clipsToBounds = YES;
+
+    CIFilter *blur = [CIFilter filterWithName:@"CIGaussianBlur"];
+    [blur setDefaults];
+    self.translucentInfoContainer.layer.backgroundFilters = @[blur];
+
     self.fileUploadBackgroundTaskId = UIBackgroundTaskInvalid;
     self.photoPostBackgroundTaskId = UIBackgroundTaskInvalid;
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textInputChanged:) name:UITextViewTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(p_textInputChanged:) name:UITextViewTextDidChangeNotification object:nil];
 
     self.titleTextField.delegate = self;
     self.descriptionTextView.delegate = self;
 
-    CALayer *blurLayer = [self.imageView layer];
-    CIFilter *blur = [CIFilter filterWithName:@"CIGaussianBlur"];
-    [blur setDefaults];
-    blurLayer.backgroundFilters = [NSArray arrayWithObject:blur];
-
     self.imageView.image = self.image;
-    [self.imageView setClipsToBounds:YES];
+    self.imageView.clipsToBounds = YES;
+
+    self.titleTextField.layer.cornerRadius = 3;
+    self.titleTextField.clipsToBounds = YES;
+
+    self.descriptionTextView.layer.cornerRadius = 3;
+    self.descriptionTextView.clipsToBounds = YES;
 
     [self p_shouldUploadImage:self.image];
 
-    self.titleTextField.leftRightPadding = 4;
+//    self.titleTextField.leftRightPadding = 4;
 
     [self.titleTextField becomeFirstResponder];
 }
@@ -84,6 +104,26 @@
 {
     //  [self.scrollView setContentOffset:CGPointMake(0, CGRectGetMinY(textView.frame)) animated:YES];
     return YES;
+}
+
+#pragma mark - UITextViewDelegate
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:kLSDescriptionPlaceholderText]) {
+        textView.text = @"";
+        textView.textColor = [UIColor blackColor]; //optional
+    }
+    [textView becomeFirstResponder];
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@""]) {
+        textView.text = kLSDescriptionPlaceholderText;
+        textView.textColor = [UIColor lightGrayColor]; //optional
+    }
+    [textView resignFirstResponder];
 }
 
 #pragma mark - LSPostPhotoViewController
@@ -199,9 +239,9 @@
     return YES;
 }
 
-#pragma mark UITextView nofitication methods
+#pragma mark - UITextView nofitication methods
 
-- (void)textInputChanged:(NSNotification *)note
+- (void)p_textInputChanged:(NSNotification *)note
 {
     self.postButton.enabled = [self p_findUnfilledTextView] == nil;
 }
