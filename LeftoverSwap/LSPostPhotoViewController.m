@@ -117,7 +117,7 @@
     [post setObject:self.thumbnailFile forKey:kPostThumbnailKey];
     [post setObject:trimmedDescription forKey:kPostDescriptionKey];
     [post setObject:trimmedTitle forKey:kPostTitleKey];
-    [post setObject:[self p_findUnfilledTextView] forKey:kPostLocationKey];
+    [post setObject:[self p_currentLocation] forKey:kPostLocationKey];
 
     // photos are public, but may only be modified by the user who uploaded them
     PFACL *photoACL = [PFACL ACLWithUser:[PFUser currentUser]];
