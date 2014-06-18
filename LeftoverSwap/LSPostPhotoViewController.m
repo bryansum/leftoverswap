@@ -146,7 +146,12 @@ static NSString *const kLSDescriptionPlaceholderText = @"Anything else to add?";
 
     //NSDictionary *userInfo = [NSDictionary dictionary];
     NSString *trimmedTitle = [self.titleTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    NSString *trimmedDescription = [self.descriptionTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSString *trimmedDescription;
+    if ([self.descriptionTextView.text isEqualToString:kLSDescriptionPlaceholderText]) {
+        trimmedDescription = @"";
+    } else {
+        trimmedDescription = [self.descriptionTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    }
 
     if (!self.photoFile || !self.thumbnailFile) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Couldn't post your photo" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Dismiss", nil];
