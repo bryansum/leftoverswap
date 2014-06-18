@@ -16,6 +16,7 @@
 
 #import "LSSignupViewController.h"
 
+#import "LSTextField.h"
 #import <Parse/Parse.h>
 #import "LSActivityView.h"
 #import "LSMapViewController.h"
@@ -59,10 +60,11 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textInputChanged:) name:UITextFieldTextDidChangeNotification object:self.passwordField];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textInputChanged:) name:UITextFieldTextDidChangeNotification object:self.emailField];
 
-    for (UIView *view in @[self.usernameField, self.passwordField, self.emailField]) {
+    for (LSTextField *view in @[self.usernameField, self.passwordField, self.emailField]) {
         view.tintColor = [UIColor whiteColor];
         view.layer.cornerRadius = 3;
         view.clipsToBounds = YES;
+        view.edgeInsets = UIEdgeInsetsMake(3, 5, 3, 3);
     }
 
     // This is a simple way to make the status bar white.

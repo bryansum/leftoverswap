@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0805F28917A7940300963343 /* LSPostPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0805F28817A7940300963343 /* LSPostPhotoViewController.m */; };
 		0823B42817A0A4DE00FE86FF /* LSConstants.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0823B42717A0A4DE00FE86FF /* LSConstants.mm */; };
+		0835216619516CC3006EC3CF /* LSTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 0835216519516CC3006EC3CF /* LSTextField.m */; };
 		083D474017DD2C670081FE4B /* LSNewConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 083D473F17DD2C670081FE4B /* LSNewConversationViewController.m */; };
 		083D474317DD31CA0081FE4B /* LSConversationHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 083D474217DD31CA0081FE4B /* LSConversationHeader.m */; };
 		083D474817DF964C0081FE4B /* PFObject+Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 083D474717DF964C0081FE4B /* PFObject+Conversation.m */; };
@@ -80,6 +81,8 @@
 		0805F28817A7940300963343 /* LSPostPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSPostPhotoViewController.m; sourceTree = "<group>"; };
 		0823B42617A0A4DE00FE86FF /* LSConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSConstants.h; sourceTree = "<group>"; };
 		0823B42717A0A4DE00FE86FF /* LSConstants.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LSConstants.mm; sourceTree = "<group>"; };
+		0835216419516CC3006EC3CF /* LSTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSTextField.h; sourceTree = "<group>"; };
+		0835216519516CC3006EC3CF /* LSTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSTextField.m; sourceTree = "<group>"; };
 		083D473E17DD2C670081FE4B /* LSNewConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSNewConversationViewController.h; sourceTree = "<group>"; };
 		083D473F17DD2C670081FE4B /* LSNewConversationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSNewConversationViewController.m; sourceTree = "<group>"; };
 		083D474117DD31CA0081FE4B /* LSConversationHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSConversationHeader.h; sourceTree = "<group>"; };
@@ -207,6 +210,8 @@
 				08AB64F517BEDC1000EF8D0D /* Conversation */,
 				08EB0F5617B3024C00C5E4FF /* LSActivityView.h */,
 				08EB0F5717B3024C00C5E4FF /* LSActivityView.m */,
+				0835216419516CC3006EC3CF /* LSTextField.h */,
+				0835216519516CC3006EC3CF /* LSTextField.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -576,6 +581,7 @@
 				08E05CEC17D7A53800393A3D /* PFObject+PrivateChannelName.m in Sources */,
 				083D474017DD2C670081FE4B /* LSNewConversationViewController.m in Sources */,
 				083D474317DD31CA0081FE4B /* LSConversationHeader.m in Sources */,
+				0835216619516CC3006EC3CF /* LSTextField.m in Sources */,
 				083D474817DF964C0081FE4B /* PFObject+Conversation.m in Sources */,
 				083D475217E3015C0081FE4B /* LSMePostCell.m in Sources */,
 				083D475517E5323B0081FE4B /* LSConversationUtils.m in Sources */,
