@@ -35,44 +35,44 @@ static NSString *const kLastTimeOpenedKey = @"lastTimeOpened";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
-  [Parse setApplicationId:@"rxURqAiZdT4w3QiLPpecMAOyFF2qzVxsLPD1FcGR"
-                clientKey:@"HF41j3NxMvnykjW2Cbu7LL48NA2Ebk98qUCT252h"];
+    [Parse setApplicationId:@"rxURqAiZdT4w3QiLPpecMAOyFF2qzVxsLPD1FcGR"
+                  clientKey:@"HF41j3NxMvnykjW2Cbu7LL48NA2Ebk98qUCT252h"];
 
-  [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"5626fb490590f2c11ca90eece15c0a23" delegate:self];
-  [[BITHockeyManager sharedHockeyManager] startManager];
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"5626fb490590f2c11ca90eece15c0a23" delegate:self];
+    [[BITHockeyManager sharedHockeyManager] startManager];
 
-  [self resetApplicationBadgeNumber:application];
-  
-  [self setupAppearance];
-  
-  self.locationController = [[LSLocationController alloc] init];
+    [self resetApplicationBadgeNumber:application];
 
-  self.tabBarController = [[LSTabBarController alloc] init];
+    [self setupAppearance];
 
-  self.viewController = self.tabBarController;
-  self.window.rootViewController = self.viewController;
+    self.locationController = [[LSLocationController alloc] init];
 
-  [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-  
-  NSDictionary *notificationPayload = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
-  if (notificationPayload) {
-    NSLog(@"notification payload received");
-    [self application:application didReceiveRemoteNotification:notificationPayload];
-  }
+    self.tabBarController = [[LSTabBarController alloc] init];
 
-  [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound];
+    self.viewController = self.tabBarController;
+    self.window.rootViewController = self.viewController;
 
-//    self.window.tintColor = [UIColor whiteColor];
-  self.window.tintColor = kLSGreenColor;
-  [self.window makeKeyAndVisible];
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
 
-  if (![PFUser currentUser]) {
-    [self.tabBarController presentSignInViewAnimated:NO];
-  }
-  
-  return YES;
+    NSDictionary *notificationPayload = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (notificationPayload) {
+        NSLog(@"notification payload received");
+        [self application:application didReceiveRemoteNotification:notificationPayload];
+    }
+
+    [self p_registerForRemoteNotifications:application];
+
+    //    self.window.tintColor = [UIColor whiteColor];
+    self.window.tintColor = kLSGreenColor;
+    [self.window makeKeyAndVisible];
+
+    if (![PFUser currentUser]) {
+        [self.tabBarController presentSignInViewAnimated:NO];
+    }
+    
+    return YES;
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -87,10 +87,10 @@ static NSString *const kLastTimeOpenedKey = @"lastTimeOpened";
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-  // TODO: is this really needed?
-  [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound];
-
-  [self resetApplicationBadgeNumber:application];
+    // TODO: is this really needed?
+    [self p_registerForRemoteNotifications:application];
+ 
+    [self resetApplicationBadgeNumber:application];
 }
 
 #pragma mark - LSAppDelegate
@@ -105,7 +105,15 @@ static NSString *const kLastTimeOpenedKey = @"lastTimeOpened";
 //  [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor, [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset, nil]];
 }
 
-#pragma mark - Remote notifications
+#pragma mark - UIApplicationDelegate
+
+// iOS 8
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+    // This will then call application:didFailToRegisterForRemoteNotificationsWithError or
+    // application:didRegisterUserNotificationSettings:
+    [application registerForRemoteNotifications];
+}
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
 {
@@ -205,6 +213,21 @@ static NSString *const kLastTimeOpenedKey = @"lastTimeOpened";
 //    return [[UIDevice currentDevice] performSelector:@selector(uniqueIdentifier)];
 //#endif
   return nil;
+}
+
+#pragma mark - Private methods
+
+- (void)p_registerForRemoteNotifications:(UIApplication *)application
+{
+    // iOS 8
+    if ([application respondsToSelector:@selector(registerForRemoteNotifications)]) {
+        UIUserNotificationType notificationTypes = UIUserNotificationTypeBadge|UIUserNotificationTypeAlert|UIUserNotificationTypeSound;
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
+        [application registerUserNotificationSettings:settings];
+        // see application:didRegisterUserNotificationSettings: for the callback here.
+    } else {
+        [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound];
+    }
 }
 
 @end
