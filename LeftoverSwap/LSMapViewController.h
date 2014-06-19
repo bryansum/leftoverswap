@@ -11,7 +11,7 @@
 
 @class LSLocationController;
 
-@interface LSMapViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate>
+@interface LSMapViewController : UIViewController <MKMapViewDelegate>
 
 @property (nonatomic, strong) IBOutlet MKMapView *mapView;
 

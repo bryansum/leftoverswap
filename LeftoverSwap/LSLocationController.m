@@ -33,72 +33,80 @@ static NSString * const kDefaultsLocationKey = @"currentLocation";
 
 @implementation LSLocationController
 
-@synthesize locationManager;
-@synthesize currentLocation;
-@synthesize filterDistance;
-
 - (id)init
 {
-  self = [super init];
-  if (self) {
-    locationManager = [[CLLocationManager alloc] init];
-    
-    locationManager.delegate = self;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    
-    // Set a movement threshold for new events.
-    locationManager.distanceFilter = kCLLocationAccuracyNearestTenMeters;
-    
-    currentLocation = locationManager.location;
-    
-    // Grab values from NSUserDefaults:
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    self = [super init];
+    if (self) {
+        self.locationManager = [[CLLocationManager alloc] init];
 
-    if ([userDefaults doubleForKey:kDefaultsFilterDistanceKey]) {
-      // use the ivar instead of self.accuracy to avoid an unnecessary write to NAND on launch.
-      filterDistance = [userDefaults doubleForKey:kDefaultsFilterDistanceKey];
-    } else {
-      // if we have no accuracy in defaults, set it to 1000 feet.
-      filterDistance = 1000 * kLSFeetToMeters;
+        CLAuthorizationStatus authStatus = [CLLocationManager authorizationStatus];
+        if (authStatus == kCLAuthorizationStatusRestricted ||
+            authStatus == kCLAuthorizationStatusDenied) {
+            // This will be handled by the location manager delegate authorization update below.
+        } else if (authStatus == kCLAuthorizationStatusNotDetermined) {
+            if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+                [self.locationManager requestWhenInUseAuthorization];
+            }
+        }
+
+        self.locationManager.delegate = self;
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+
+        // Set a movement threshold for new events.
+        self.locationManager.distanceFilter = kCLLocationAccuracyNearestTenMeters;
+
+//        self.currentLocation = self.locationManager.location;
+
+        // Grab values from NSUserDefaults:
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+
+        if ([userDefaults doubleForKey:kDefaultsFilterDistanceKey]) {
+            // use the ivar instead of self.accuracy to avoid an unnecessary write to NAND on launch.
+            self.filterDistance = [userDefaults doubleForKey:kDefaultsFilterDistanceKey];
+        } else {
+            // if we have no accuracy in defaults, set it to 1000 feet.
+            self.filterDistance = 1000 * kLSFeetToMeters;
+        }
+        
     }
-
-  }
-  return self;
+    return self;
 }
 
 - (void)dealloc
 {
-  [locationManager stopUpdatingLocation];
+    [self.locationManager stopUpdatingLocation];
 }
 
 - (void)startUpdatingLocation {
-  [locationManager startUpdatingLocation];
+    [self.locationManager startUpdatingLocation];
 }
 
 - (void)stopUpdatingLocation {
-  [locationManager stopUpdatingLocation];
+    [self.locationManager stopUpdatingLocation];
 }
 
 #pragma mark - Custom setters
 
-- (void)setFilterDistance:(CLLocationAccuracy)aFilterDistance {
-	filterDistance = aFilterDistance;
-  
-	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-	[userDefaults setDouble:filterDistance forKey:kDefaultsFilterDistanceKey];
-	[userDefaults synchronize];
-  
-  NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithDouble:filterDistance] forKey:kLSFilterDistanceKey];
-  dispatch_async(dispatch_get_main_queue(), ^{
-		[[NSNotificationCenter defaultCenter] postNotificationName:kLSFilterDistanceChangeNotification object:nil userInfo:userInfo];
-	});
+- (void)setFilterDistance:(CLLocationAccuracy)aFilterDistance
+{
+    _filterDistance = aFilterDistance;
+
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setDouble:_filterDistance forKey:kDefaultsFilterDistanceKey];
+    [userDefaults synchronize];
+
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithDouble:_filterDistance] forKey:kLSFilterDistanceKey];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLSFilterDistanceChangeNotification object:nil userInfo:userInfo];
+    });
 }
 
-- (void)setCurrentLocation:(CLLocation *)aCurrentLocation {
-	currentLocation = aCurrentLocation;
+- (void)setCurrentLocation:(CLLocation *)aCurrentLocation
+{
+	_currentLocation = aCurrentLocation;
   
 	// Notify the app of the location change:
-	NSDictionary *userInfo = [NSDictionary dictionaryWithObject:currentLocation forKey:kLSLocationKey];
+	NSDictionary *userInfo = [NSDictionary dictionaryWithObject:_currentLocation forKey:kLSLocationKey];
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[[NSNotificationCenter defaultCenter] postNotificationName:kLSLocationChangeNotification object:nil userInfo:userInfo];
 	});
@@ -106,22 +114,19 @@ static NSString * const kDefaultsLocationKey = @"currentLocation";
 
 #pragma mark - CLLocationManagerDelegate
 
-- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-	switch (status) {
-    case kCLAuthorizationStatusAuthorized:
-      NSLog(@"kCLAuthorizationStatusAuthorized");
-      [locationManager startUpdatingLocation];
-      break;
-    case kCLAuthorizationStatusDenied:
-      NSLog(@"kCLAuthorizationStatusDenied");
-    {{
-      UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"LeftoverSwap can’t access your current location.\n\nTo view nearby posts or create a post at your current location, turn on access for Anywall to your location in the Settings app under Location Services." message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-      [alertView show];
-    }}
-      break;
-    default:
-      break;
-	}
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    switch (status) {
+        case kCLAuthorizationStatusAuthorized:
+            [self.locationManager startUpdatingLocation];
+            break;
+        case kCLAuthorizationStatusRestricted:
+        case kCLAuthorizationStatusDenied:
+            [self p_alertLocationWarning];
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
@@ -133,7 +138,7 @@ static NSString * const kDefaultsLocationKey = @"currentLocation";
 	NSLog(@"Error: %@", [error description]);
   
 	if (error.code == kCLErrorDenied) {
-		[locationManager stopUpdatingLocation];
+		[self.locationManager stopUpdatingLocation];
 	} else if (error.code == kCLErrorLocationUnknown) {
 		// todo: retry?
 		// set a timer for five seconds to cycle location, and if it fails again, bail and tell the user.
@@ -147,5 +152,12 @@ static NSString * const kDefaultsLocationKey = @"currentLocation";
 	}
 }
 
+#pragma mark - Private
+
+- (void)p_alertLocationWarning
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"LeftoverSwap can't access your current location.\n\nTo view nearby posts or create a post at your current location, turn on location access in Settings → Privacy → Location Services." message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    [alertView show];
+}
 
 @end

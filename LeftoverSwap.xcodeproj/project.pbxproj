@@ -10,6 +10,9 @@
 		0805F28917A7940300963343 /* LSPostPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0805F28817A7940300963343 /* LSPostPhotoViewController.m */; };
 		0823B42817A0A4DE00FE86FF /* LSConstants.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0823B42717A0A4DE00FE86FF /* LSConstants.mm */; };
 		0835216619516CC3006EC3CF /* LSTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 0835216519516CC3006EC3CF /* LSTextField.m */; };
+		0836F5961952BCEF00CC779B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F45599179F7C8200CB7E2D /* Foundation.framework */; };
+		0836F5971952BCFB00CC779B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F45597179F7C8200CB7E2D /* UIKit.framework */; };
+		0836F5991952BD3700CC779B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0836F5981952BD3700CC779B /* CFNetwork.framework */; };
 		083D474017DD2C670081FE4B /* LSNewConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 083D473F17DD2C670081FE4B /* LSNewConversationViewController.m */; };
 		083D474317DD31CA0081FE4B /* LSConversationHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 083D474217DD31CA0081FE4B /* LSConversationHeader.m */; };
 		083D474817DF964C0081FE4B /* PFObject+Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 083D474717DF964C0081FE4B /* PFObject+Conversation.m */; };
@@ -41,8 +44,6 @@
 		08EB0F7C17B4782D00C5E4FF /* LSConversationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EB0F7B17B4782D00C5E4FF /* LSConversationCell.m */; };
 		08EB0F8417B569F300C5E4FF /* LSConversationSummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EB0F8217B569F200C5E4FF /* LSConversationSummaryViewController.m */; };
 		08EB0F8817B8857200C5E4FF /* LSConversationSummaryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EB0F8717B8857100C5E4FF /* LSConversationSummaryCell.m */; };
-		08F45598179F7C8200CB7E2D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F45597179F7C8200CB7E2D /* UIKit.framework */; };
-		08F4559A179F7C8200CB7E2D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F45599179F7C8200CB7E2D /* Foundation.framework */; };
 		08F455A2179F7C8200CB7E2D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 08F455A0179F7C8200CB7E2D /* InfoPlist.strings */; };
 		08F455A4179F7C8200CB7E2D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F455A3179F7C8200CB7E2D /* main.m */; };
 		08F455A8179F7C8200CB7E2D /* LSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F455A7179F7C8200CB7E2D /* LSAppDelegate.m */; };
@@ -83,6 +84,7 @@
 		0823B42717A0A4DE00FE86FF /* LSConstants.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LSConstants.mm; sourceTree = "<group>"; };
 		0835216419516CC3006EC3CF /* LSTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSTextField.h; sourceTree = "<group>"; };
 		0835216519516CC3006EC3CF /* LSTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSTextField.m; sourceTree = "<group>"; };
+		0836F5981952BD3700CC779B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		083D473E17DD2C670081FE4B /* LSNewConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSNewConversationViewController.h; sourceTree = "<group>"; };
 		083D473F17DD2C670081FE4B /* LSNewConversationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSNewConversationViewController.m; sourceTree = "<group>"; };
 		083D474117DD31CA0081FE4B /* LSConversationHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSConversationHeader.h; sourceTree = "<group>"; };
@@ -180,11 +182,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0836F5991952BD3700CC779B /* CFNetwork.framework in Frameworks */,
+				0836F5971952BCFB00CC779B /* UIKit.framework in Frameworks */,
 				08D18809180109CB00C45CA0 /* CoreImage.framework in Frameworks */,
 				08EB0F7017B3589400C5E4FF /* MapKit.framework in Frameworks */,
 				08F455C1179F7CEE00CB7E2D /* CoreLocation.framework in Frameworks */,
-				08F45598179F7C8200CB7E2D /* UIKit.framework in Frameworks */,
-				08F4559A179F7C8200CB7E2D /* Foundation.framework in Frameworks */,
+				0836F5961952BCEF00CC779B /* Foundation.framework in Frameworks */,
 				C983417F29C64C2F9E79E278 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -376,6 +379,7 @@
 		08F45596179F7C8200CB7E2D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0836F5981952BD3700CC779B /* CFNetwork.framework */,
 				08D18808180109CB00C45CA0 /* CoreImage.framework */,
 				08EB0F6F17B3589400C5E4FF /* MapKit.framework */,
 				08F455C0179F7CEE00CB7E2D /* CoreLocation.framework */,

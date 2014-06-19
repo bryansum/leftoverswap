@@ -48,6 +48,8 @@
 	</array>
 	<key>UIStatusBarHidden</key>
 	<true/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>LeftoverSwap would like to access your location to view nearby posts or create a post.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
