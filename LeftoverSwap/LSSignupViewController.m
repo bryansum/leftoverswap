@@ -80,6 +80,13 @@
     [self.usernameField becomeFirstResponder];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.usernameField resignFirstResponder];
+    [self.passwordField resignFirstResponder];
+    [self.emailField resignFirstResponder];
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

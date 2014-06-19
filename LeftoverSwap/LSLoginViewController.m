@@ -68,6 +68,12 @@ static const NSInteger kResetPasswordAlertView = 20;
     [self.usernameField becomeFirstResponder];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.usernameField resignFirstResponder];
+    [self.passwordField resignFirstResponder];
+}
+
 -  (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:self.usernameField];
